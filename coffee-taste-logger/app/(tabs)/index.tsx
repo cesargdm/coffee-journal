@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
-import { createStyleSheet, useStyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface CoffeeLog {
@@ -36,8 +36,6 @@ const mockLogs: CoffeeLog[] = [
 ];
 
 export default function LogsScreen() {
-  const { styles } = useStyles(stylesheet);
-
   const renderLogItem = ({ item }: { item: CoffeeLog }) => (
     <TouchableOpacity style={styles.logItem}>
       <View style={styles.logHeader}>
@@ -94,7 +92,7 @@ export default function LogsScreen() {
   );
 }
 
-const stylesheet = createStyleSheet((theme) => ({
+const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,

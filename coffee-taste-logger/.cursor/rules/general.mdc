@@ -1,0 +1,73 @@
+# General Development Rules
+
+## Code Quality Standards
+
+1. **TypeScript First**: Always use TypeScript for new files. Ensure proper type annotations.
+2. **Component Structure**: Use functional components with hooks. No class components.
+3. **Naming Conventions**:
+   - Components: PascalCase (e.g., `CoffeeLogItem`)
+   - Files: Match component names for components, camelCase for utilities
+   - Variables/Functions: camelCase
+   - Constants: UPPER_SNAKE_CASE
+   - Types/Interfaces: PascalCase with `I` prefix for interfaces or `T` prefix for types
+
+## Development Workflow
+
+1. **Before Starting Work**:
+   - Pull latest changes
+   - Install dependencies with `bun install`
+   - Run `bun run typecheck` to ensure no existing type errors
+
+2. **During Development**:
+   - Write clean, self-documenting code
+   - Add comments only when necessary to explain "why", not "what"
+   - Keep functions small and focused (single responsibility)
+   - Use meaningful variable names
+
+3. **Before Finishing Work** (REQUIRED):
+   - Run `bun run lint` to check for linting errors
+   - Run `bun run format` to format all code
+   - Run `bun run typecheck` to ensure no TypeScript errors
+   - Fix any issues found by the above commands
+   - Commit only after all checks pass
+
+## Project-Specific Guidelines
+
+1. **Styling**: Use Unistyles for all styling. No inline styles except for dynamic values.
+2. **Navigation**: Use Expo Router for all navigation. Follow file-based routing patterns.
+3. **State Management**: Use React hooks for local state. Consider Context API for shared state.
+4. **Icons**: Use SF Symbols for iOS, provide PNG alternatives for Android.
+5. **Testing**: Write unit tests for utility functions and integration tests for critical flows.
+
+## Coffee Taste Logger Specific
+
+1. **Data Model**: Maintain consistency in the three-point scoring system (Tongue Taste, Retronasal, Mouth Tactile)
+2. **UI/UX**: Keep the interface simple and elegant. Prioritize quick logging of coffee experiences.
+3. **Performance**: Optimize list rendering for large numbers of coffee logs.
+4. **Accessibility**: Ensure all interactive elements are accessible with proper labels.
+
+## Git Commit Messages
+
+Follow conventional commits:
+- `feat:` for new features
+- `fix:` for bug fixes
+- `chore:` for maintenance tasks
+- `docs:` for documentation
+- `style:` for formatting changes
+- `refactor:` for code refactoring
+- `test:` for test additions/changes
+
+## Dependencies
+
+- Always use `bun add` for adding dependencies
+- Prefer well-maintained packages with TypeScript support
+- Document why a dependency was added in the commit message
+
+## Final Checklist Before Completing Any Task
+
+- [ ] All TypeScript errors resolved (`bun run typecheck`)
+- [ ] ESLint passes without errors (`bun run lint`)
+- [ ] Code is properly formatted (`bun run format`)
+- [ ] No console.log statements (except console.warn/error where appropriate)
+- [ ] All TODOs are either resolved or documented with issue numbers
+- [ ] New features have been manually tested on at least one platform

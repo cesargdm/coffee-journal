@@ -14,20 +14,22 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Logs',
-          tabBarIcon: () => Platform.select({
-            ios: { sfSymbol: 'list.bullet' },
-            android: require('../../assets/list-icon.png'),
-          }),
+          tabBarIcon: () =>
+            Platform.select({
+              ios: { sfSymbol: 'list.bullet' },
+              android: require('../../assets/list-icon.png'),
+            }),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: () => Platform.select({
-            ios: { sfSymbol: 'gearshape' },
-            android: require('../../assets/settings-icon.png'),
-          }),
+          tabBarIcon: () =>
+            Platform.select({
+              ios: { sfSymbol: 'gearshape' },
+              android: require('../../assets/settings-icon.png'),
+            }),
         }}
       />
     </Tabs>

@@ -1,4 +1,4 @@
-import { UnistylesRegistry } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 const lightTheme = {
   colors: {
@@ -73,20 +73,21 @@ declare module 'react-native-unistyles' {
   export interface UnistylesThemes extends AppThemes {}
 }
 
-UnistylesRegistry
-  .addThemes({
+StyleSheet.configure({
+  themes: {
     light: lightTheme,
     dark: darkTheme,
-  })
-  .addConfig({
+  },
+  settings: {
     adaptiveThemes: true,
-  })
-  .addBreakpoints({
+  },
+  breakpoints: {
     xs: 0,
     sm: 576,
     md: 768,
     lg: 992,
     xl: 1200,
-  });
+  },
+});
 
 export { lightTheme, darkTheme };
