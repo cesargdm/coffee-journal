@@ -6,12 +6,15 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native'
+
+import { Ionicons } from '@expo/vector-icons'
+import { useForm } from '@tanstack/react-form'
+import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
-import { StandardSchemaV1Issue, useForm } from '@tanstack/react-form'
 import { z } from 'zod'
-import { Ionicons } from '@expo/vector-icons'
-import { router } from 'expo-router'
+
+import type { StandardSchemaV1Issue } from '@tanstack/react-form'
 
 // Zod schema for form validation
 const coffeeLogSchema = z.object({
@@ -19,19 +22,19 @@ const coffeeLogSchema = z.object({
 		.string()
 		.min(1, 'Coffee name is required')
 		.max(100, 'Coffee name too long'),
-	tongueTaste: z
-		.number()
-		.min(1, 'Score must be at least 1')
-		.max(10, 'Score must be at most 10'),
-	retronasal: z
-		.number()
-		.min(1, 'Score must be at least 1')
-		.max(10, 'Score must be at most 10'),
 	mouthTactile: z
 		.number()
 		.min(1, 'Score must be at least 1')
 		.max(10, 'Score must be at most 10'),
 	notes: z.string().optional(),
+	retronasal: z
+		.number()
+		.min(1, 'Score must be at least 1')
+		.max(10, 'Score must be at most 10'),
+	tongueTaste: z
+		.number()
+		.min(1, 'Score must be at least 1')
+		.max(10, 'Score must be at most 10'),
 })
 
 type CoffeeLogForm = z.infer<typeof coffeeLogSchema>
@@ -40,12 +43,12 @@ export default function NewLogScreen() {
 	const form = useForm({
 		defaultValues: {
 			coffeeName: '',
-			tongueTaste: 5,
-			retronasal: 5,
 			mouthTactile: 5,
 			notes: '',
+			retronasal: 5,
+			tongueTaste: 5,
 		} as CoffeeLogForm,
-		onSubmit: async ({ value }) => {
+		 onSubmit({ value }) {
 			try {
 				// Calculate overall score as average of the three scores
 				const overallScore =
@@ -58,27 +61,27 @@ export default function NewLogScreen() {
 					`Coffee log created!\nOverall Score: ${overallScore.toFixed(1)}`,
 					[
 						{
-							text: 'OK',
 							onPress: () => router.back(),
+							text: 'OK',
 						},
 					],
 				)
-			} catch (error) {
+			} catch {
 				Alert.alert('Error', 'Failed to create coffee log. Please try again.')
 			}
 		},
 	})
 
 	const ScoreSlider = ({
-		label,
-		value,
-		onChange,
 		error,
+		label,
+		onChange,
+		value,
 	}: {
+		error?: StandardSchemaV1Issue | string | undefined
 		label: string
-		value: number
 		onChange: (value: number) => void
-		error?: string | undefined | StandardSchemaV1Issue
+		value: number
 	}) => (
 		<View style={styles.scoreContainer}>
 			<View style={styles.scoreHeader}>
@@ -89,11 +92,11 @@ export default function NewLogScreen() {
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
 					<TouchableOpacity
 						key={score}
+						onPress={() => onChange(score)}
 						style={[
 							styles.scoreButton,
 							value === score && styles.scoreButtonActive,
 						]}
-						onPress={() => onChange(score)}
 					>
 						<Text
 							style={[
@@ -106,6 +109,7 @@ export default function NewLogScreen() {
 					</TouchableOpacity>
 				))}
 			</View>
+			{/* eslint-disable-next-line @typescript-eslint/no-base-to-string */}
 			{error && <Text style={styles.errorText}>{error.toString()}</Text>}
 		</View>
 	)
@@ -113,8 +117,8 @@ export default function NewLogScreen() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView
-				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
+				style={styles.scrollView}
 			>
 				<View style={styles.content}>
 					<Text style={styles.title}>New Coffee Log</Text>
@@ -128,32 +132,34 @@ export default function NewLogScreen() {
 						validators={{
 							onChange: coffeeLogSchema.shape.coffeeName,
 						}}
-						children={(field) => (
+					>
+						{(field) => (
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Coffee Name</Text>
 								<View style={styles.inputWrapper}>
 									<Ionicons
+										color="#8B6F47"
 										name="cafe"
 										size={20}
-										color="#8B6F47"
 										style={styles.inputIcon}
 									/>
 									<TextInput
-										style={styles.textInput}
-										value={field.state.value}
 										onChangeText={field.handleChange}
 										placeholder="Enter coffee name"
 										placeholderTextColor="#B0B0B0"
+										style={styles.textInput}
+										value={field.state.value}
 									/>
 								</View>
 								{field.state.meta.errors.length > 0 && (
 									<Text style={styles.errorText}>
-										{field.state.meta.errors[0]?.toString()}
+										{/* eslint-disable-next-line @typescript-eslint/no-base-to-string */}
+										{field.state.meta.errors.at(0)?.toString()}
 									</Text>
 								)}
 							</View>
 						)}
-					/>
+					</form.Field>
 
 					{/* Tongue Taste Score */}
 					<form.Field
@@ -161,15 +167,16 @@ export default function NewLogScreen() {
 						validators={{
 							onChange: coffeeLogSchema.shape.tongueTaste,
 						}}
-						children={(field) => (
+					>
+						{(field) => (
 							<ScoreSlider
-								label="Tongue Taste"
-								value={field.state.value}
-								onChange={field.handleChange}
 								error={field.state.meta.errors[0]}
+								label="Tongue Taste"
+								onChange={field.handleChange}
+								value={field.state.value}
 							/>
 						)}
-					/>
+					</form.Field>
 
 					{/* Retronasal Score */}
 					<form.Field
@@ -177,15 +184,16 @@ export default function NewLogScreen() {
 						validators={{
 							onChange: coffeeLogSchema.shape.retronasal,
 						}}
-						children={(field) => (
+					>
+						{(field) => (
 							<ScoreSlider
-								label="Retronasal"
-								value={field.state.value}
-								onChange={field.handleChange}
 								error={field.state.meta.errors[0]}
+								label="Retronasal"
+								onChange={field.handleChange}
+								value={field.state.value}
 							/>
 						)}
-					/>
+					</form.Field>
 
 					{/* Mouth Tactile Score */}
 					<form.Field
@@ -193,60 +201,60 @@ export default function NewLogScreen() {
 						validators={{
 							onChange: coffeeLogSchema.shape.mouthTactile,
 						}}
-						children={(field) => (
+					>
+						{(field) => (
 							<ScoreSlider
-								label="Mouth Tactile"
-								value={field.state.value}
-								onChange={field.handleChange}
 								error={field.state.meta.errors[0]}
+								label="Mouth Tactile"
+								onChange={field.handleChange}
+								value={field.state.value}
 							/>
 						)}
-					/>
+					</form.Field>
 
 					{/* Notes Input */}
-					<form.Field
-						name="notes"
-						children={(field) => (
+					<form.Field name="notes">
+						{(field) => (
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Notes (Optional)</Text>
 								<View style={styles.inputWrapper}>
 									<Ionicons
+										color="#8B6F47"
 										name="document-text"
 										size={20}
-										color="#8B6F47"
 										style={styles.inputIcon}
 									/>
 									<TextInput
-										style={[styles.textInput, styles.notesInput]}
-										value={field.state.value}
+										multiline
+										numberOfLines={4}
 										onChangeText={field.handleChange}
 										placeholder="Add any notes about this coffee..."
 										placeholderTextColor="#B0B0B0"
-										multiline
-										numberOfLines={4}
+										style={[styles.textInput, styles.notesInput]}
 										textAlignVertical="top"
+										value={field.state.value}
 									/>
 								</View>
 							</View>
 						)}
-					/>
+					</form.Field>
 
-					{/* Submit Button */}
 					<form.Subscribe
-						selector={(state) => [state.canSubmit, state.isSubmitting]}
-						children={([canSubmit, isSubmitting]) => (
+						selector={(state) => [state.canSubmit, state.isSubmitting] as const}
+					>
+						{([canSubmit, isSubmitting]) => (
 							<TouchableOpacity
+								disabled={!canSubmit || isSubmitting}
+								onPress={form.handleSubmit}
 								style={[
 									styles.submitButton,
 									!canSubmit && styles.submitButtonDisabled,
 								]}
-								onPress={form.handleSubmit}
-								disabled={!canSubmit || isSubmitting}
 							>
 								<Ionicons
+									color={canSubmit ? '#FFFFFF' : '#B0B0B0'}
 									name="checkmark-circle"
 									size={20}
-									color={canSubmit ? '#FFFFFF' : '#B0B0B0'}
 									style={styles.submitIcon}
 								/>
 								<Text
@@ -259,7 +267,7 @@ export default function NewLogScreen() {
 								</Text>
 							</TouchableOpacity>
 						)}
-					/>
+					</form.Subscribe>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
