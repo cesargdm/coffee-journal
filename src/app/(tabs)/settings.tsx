@@ -34,6 +34,7 @@ export default function SettingsScreen() {
 			</View>
 			{showSwitch && (
 				<Switch
+					testID="switch"
 					value={value}
 					onValueChange={onValueChange}
 					trackColor={{ false: '#E0E0E0', true: '#6B4423' }}
