@@ -47,6 +47,7 @@
 		"typescript": "^5.3.0"
 	},
 	"prettier": "prettier-config-cretia",
+	"packageManager": "bun@1.2.18",
 	"private": true,
 	"jest": {
 		"preset": "jest-expo",
