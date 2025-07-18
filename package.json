@@ -15,7 +15,6 @@
 	},
 	"dependencies": {
 		"@babel/core": "^7.28.0",
-		"ajv": "^8.17.1",
 		"expo": "~53.0.19",
 		"expo-constants": "~17.1.7",
 		"expo-linking": "~7.1.7",
