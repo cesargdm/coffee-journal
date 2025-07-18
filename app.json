@@ -1,0 +1,41 @@
+{
+	"expo": {
+		"name": "Coffee Taste Logger",
+		"slug": "coffee-taste-logger",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			}
+		},
+		"web": {
+			"favicon": "./assets/favicon.png",
+			"bundler": "metro"
+		},
+		"scheme": "coffee-taste-logger",
+		"experiments": {
+			"tsconfigPaths": true
+		},
+		"plugins": [
+			[
+				"expo-router",
+				{
+					"root": "./src/app"
+				}
+			]
+		]
+	}
+}

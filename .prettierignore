@@ -1,0 +1,10 @@
+node_modules/
+.expo/
+dist/
+build/
+*.lock
+bun.lockb
+.git/
+coverage/
+.next/
+.turbo/
