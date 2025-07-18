@@ -48,7 +48,7 @@ export default function NewLogScreen() {
 			retronasal: 5,
 			tongueTaste: 5,
 		} as CoffeeLogForm,
-		 onSubmit({ value }) {
+		onSubmit({ value }) {
 			try {
 				// Calculate overall score as average of the three scores
 				const overallScore =
