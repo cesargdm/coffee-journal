@@ -8,8 +8,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
-import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
+import { StandardSchemaV1Issue, useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
@@ -68,7 +67,6 @@ export default function NewLogScreen() {
 				Alert.alert('Error', 'Failed to create coffee log. Please try again.')
 			}
 		},
-		validatorAdapter: zodValidator(),
 	})
 
 	const ScoreSlider = ({
@@ -80,7 +78,7 @@ export default function NewLogScreen() {
 		label: string
 		value: number
 		onChange: (value: number) => void
-		error?: string
+		error?: string | undefined | StandardSchemaV1Issue
 	}) => (
 		<View style={styles.scoreContainer}>
 			<View style={styles.scoreHeader}>
@@ -108,7 +106,7 @@ export default function NewLogScreen() {
 					</TouchableOpacity>
 				))}
 			</View>
-			{error && <Text style={styles.errorText}>{error}</Text>}
+			{error && <Text style={styles.errorText}>{error.toString()}</Text>}
 		</View>
 	)
 
@@ -150,7 +148,7 @@ export default function NewLogScreen() {
 								</View>
 								{field.state.meta.errors.length > 0 && (
 									<Text style={styles.errorText}>
-										{field.state.meta.errors[0]}
+										{field.state.meta.errors[0]?.toString()}
 									</Text>
 								)}
 							</View>
