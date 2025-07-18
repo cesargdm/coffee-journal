@@ -26,6 +26,9 @@
 			"bundler": "metro"
 		},
 		"scheme": "coffee-taste-logger",
+		"experiments": {
+			"tsconfigPaths": true
+		},
 		"plugins": [
 			[
 				"expo-router",

@@ -9,18 +9,6 @@ module.exports = function (api) {
 					root: 'src',
 				},
 			],
-			[
-				'module-resolver',
-				{
-					root: ['./src'],
-					alias: {
-						'@': './src',
-						'@components': './src/components',
-						'@styles': './src/styles',
-						'@app': './src/app',
-					},
-				},
-			],
 		],
 	}
 }
