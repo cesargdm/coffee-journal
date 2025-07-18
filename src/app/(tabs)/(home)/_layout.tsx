@@ -1,6 +1,6 @@
 import { Button } from 'react-native'
 
-import { Stack } from 'expo-router'
+import { Stack, router } from 'expo-router'
 
 export default function HomeLayout() {
 	return (
@@ -9,9 +9,16 @@ export default function HomeLayout() {
 				name="index"
 				options={{
 					headerRight() {
-						return <Button title="Add Log" />
+						return <Button title="Add Log" onPress={() => router.push('/(tabs)/(home)/new-log')} />
 					},
 					title: 'Logs',
+				}}
+			/>
+			<Stack.Screen
+				name="new-log"
+				options={{
+					title: 'New Log',
+					presentation: 'modal',
 				}}
 			/>
 		</Stack>
