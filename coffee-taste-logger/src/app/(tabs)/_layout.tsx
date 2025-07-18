@@ -1,23 +1,22 @@
 import { Tabs } from 'expo-router';
 import { Platform } from 'react-native';
-import { BottomTabBar } from 'react-native-bottom-tabs';
 
 export default function TabLayout() {
   return (
     <Tabs
-      tabBar={(props) => <BottomTabBar {...props} />}
       screenOptions={{
         headerShown: true,
+        tabBarActiveTintColor: '#6B4423',
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Logs',
-          tabBarIcon: () =>
+          tabBarIcon: ({ color }) =>
             Platform.select({
-              ios: { sfSymbol: 'list.bullet' },
-              android: require('../../assets/list-icon.png'),
+              ios: { sfSymbol: 'list.bullet', color },
+              android: require('../../../assets/list-icon.png'),
             }),
         }}
       />
@@ -25,10 +24,10 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: () =>
+          tabBarIcon: ({ color }) =>
             Platform.select({
-              ios: { sfSymbol: 'gearshape' },
-              android: require('../../assets/settings-icon.png'),
+              ios: { sfSymbol: 'gearshape', color },
+              android: require('../../../assets/settings-icon.png'),
             }),
         }}
       />

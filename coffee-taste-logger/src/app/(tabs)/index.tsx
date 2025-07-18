@@ -69,9 +69,7 @@ export default function LogsScreen() {
   const EmptyState = () => (
     <View style={styles.emptyState}>
       <Text style={styles.emptyStateText}>No coffee logs yet</Text>
-      <Text style={styles.emptyStateSubtext}>
-        Start logging your coffee tasting experiences
-      </Text>
+      <Text style={styles.emptyStateSubtext}>Start logging your coffee tasting experiences</Text>
     </View>
   );
 
