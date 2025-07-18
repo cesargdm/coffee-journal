@@ -12,9 +12,7 @@
 		"format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
 		"typecheck": "tsc --noEmit",
 		"test": "jest --watchAll",
-		"build:web": "expo export -p web && ./config/update-asset-paths.sh",
-		"postinstall": "bunx expo install --fix",
-		"fix-deps": "bunx expo install --fix"
+		"build:web": "expo export -p web && ./config/update-asset-paths.sh"
 	},
 	"dependencies": {
 		"@babel/core": "^7.28.0",
