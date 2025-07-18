@@ -13,27 +13,8 @@ interface CoffeeLog {
 	overallScore: number
 }
 
-// Mock data for now
-const mockLogs: CoffeeLog[] = [
-	{
-		id: '1',
-		date: new Date(),
-		coffeeName: 'Ethiopian Yirgacheffe',
-		tongueTaste: 8,
-		retronasal: 9,
-		mouthTactile: 7,
-		overallScore: 8,
-	},
-	{
-		id: '2',
-		date: new Date(Date.now() - 86400000),
-		coffeeName: 'Colombian Supremo',
-		tongueTaste: 7,
-		retronasal: 7,
-		mouthTactile: 8,
-		overallScore: 7.3,
-	},
-]
+// No mock data - start with empty state
+const mockLogs: CoffeeLog[] = []
 
 export default function LogsScreen() {
 	const renderLogItem = ({ item }: { item: CoffeeLog }) => (
@@ -68,9 +49,9 @@ export default function LogsScreen() {
 
 	const EmptyState = () => (
 		<View style={styles.emptyState}>
-			<Text style={styles.emptyStateText}>No coffee logs yet</Text>
+			<Text style={styles.emptyStateText}>Create your first log</Text>
 			<Text style={styles.emptyStateSubtext}>
-				Start logging your coffee tasting experiences
+				Start your coffee journey by recording your first tasting experience
 			</Text>
 		</View>
 	)
@@ -85,9 +66,6 @@ export default function LogsScreen() {
 				ListEmptyComponent={EmptyState}
 				ItemSeparatorComponent={() => <View style={styles.separator} />}
 			/>
-			<TouchableOpacity style={styles.fab}>
-				<Text style={styles.fabText}>+</Text>
-			</TouchableOpacity>
 		</SafeAreaView>
 	)
 }
@@ -164,26 +142,5 @@ const styles = StyleSheet.create((theme) => ({
 		...theme.typography.body,
 		color: theme.colors.textSecondary,
 		textAlign: 'center',
-	},
-	fab: {
-		position: 'absolute',
-		right: theme.spacing.lg,
-		bottom: theme.spacing.lg,
-		width: 56,
-		height: 56,
-		borderRadius: theme.borderRadius.full,
-		backgroundColor: theme.colors.primary,
-		justifyContent: 'center',
-		alignItems: 'center',
-		elevation: 4,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-	},
-	fabText: {
-		fontSize: 24,
-		color: '#FFFFFF',
-		fontWeight: '600',
 	},
 }))
