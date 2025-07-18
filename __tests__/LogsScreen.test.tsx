@@ -1,6 +1,6 @@
-import React from 'react'
 import { render } from '@testing-library/react-native'
-import LogsScreen from '@/app/(tabs)/index'
+
+import LogsScreen from '@/app/(tabs)/(home)/index'
 
 describe('LogsScreen', () => {
 	it('renders correctly', () => {

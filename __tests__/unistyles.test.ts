@@ -1,47 +1,47 @@
 // Since unistyles imports cause issues in tests, we'll test the theme values directly
 const lightTheme = {
+	borderRadius: {
+		full: 9999,
+		lg: 16,
+		md: 8,
+		sm: 4,
+	},
 	colors: {
 		background: '#FFFFFF',
+		border: '#E0E0E0',
+		primary: '#6B4423',
 		surface: '#F5F5F5',
 		text: '#1A1A1A',
 		textSecondary: '#666666',
-		primary: '#6B4423',
-		border: '#E0E0E0',
 	},
 	spacing: {
-		xs: 4,
-		sm: 8,
-		md: 16,
 		lg: 24,
+		md: 16,
+		sm: 8,
 		xl: 32,
+		xs: 4,
 	},
 	typography: {
+		body: { fontSize: 16, fontWeight: 'normal' as const },
+		caption: { fontSize: 12, fontWeight: 'normal' as const },
 		h1: { fontSize: 32, fontWeight: 'bold' as const },
 		h2: { fontSize: 24, fontWeight: 'bold' as const },
 		h3: { fontSize: 18, fontWeight: '600' as const },
-		body: { fontSize: 16, fontWeight: 'normal' as const },
-		caption: { fontSize: 12, fontWeight: 'normal' as const },
-	},
-	borderRadius: {
-		sm: 4,
-		md: 8,
-		lg: 16,
-		full: 9999,
 	},
 }
 
 const darkTheme = {
+	borderRadius: lightTheme.borderRadius,
 	colors: {
 		background: '#121212',
+		border: '#333333',
+		primary: '#D2691E',
 		surface: '#1E1E1E',
 		text: '#FFFFFF',
 		textSecondary: '#B0B0B0',
-		primary: '#D2691E',
-		border: '#333333',
 	},
 	spacing: lightTheme.spacing,
 	typography: lightTheme.typography,
-	borderRadius: lightTheme.borderRadius,
 }
 
 describe('Unistyles Theme Configuration', () => {

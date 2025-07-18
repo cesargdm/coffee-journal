@@ -8,7 +8,7 @@
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
 		"splash": {
-			"image": "./assets/splash.png",
+			"image": "./assets/splash-icon.png",
 			"resizeMode": "contain",
 			"backgroundColor": "#ffffff"
 		},
@@ -33,12 +33,23 @@
 			"tsconfigPaths": true
 		},
 		"plugins": [
+			"expo-router",
+			"react-native-bottom-tabs",
 			[
-				"expo-router",
+				"expo-build-properties",
 				{
-					"root": "./src/app"
+					"ios": {
+						"useFrameworks": "static"
+					}
 				}
-			]
-		]
+			],
+			"react-native-edge-to-edge"
+		],
+		"extra": {
+			"eas": {
+				"projectId": "9d2632ae-7c66-4cd5-bfe5-9c3aa969dff0"
+			}
+		},
+		"owner": "cesargdm"
 	}
 }

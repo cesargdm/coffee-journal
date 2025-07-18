@@ -1,7 +1,8 @@
-import React from 'react'
-import { View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native'
-import { StyleSheet, UnistylesRuntime } from 'react-native-unistyles'
+import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native'
+
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet } from 'react-native-unistyles'
+import { UnistylesRuntime } from 'react-native-unistyles'
 
 export default function SettingsScreen() {
 	const isDarkMode = UnistylesRuntime.themeName === 'dark'
@@ -11,22 +12,22 @@ export default function SettingsScreen() {
 	}
 
 	const SettingItem = ({
-		title,
-		subtitle,
-		value,
 		onValueChange,
 		showSwitch = false,
+		subtitle,
+		title,
+		value,
 	}: {
-		title: string
-		subtitle?: string
-		value?: boolean
 		onValueChange?: (value: boolean) => void
 		showSwitch?: boolean
+		subtitle?: string
+		title: string
+		value?: boolean
 	}) => (
 		<TouchableOpacity
-			style={styles.settingItem}
-			onPress={() => !showSwitch && onValueChange?.(!value)}
 			activeOpacity={showSwitch ? 1 : 0.7}
+			onPress={() => !showSwitch && onValueChange?.(!value)}
+			style={styles.settingItem}
 		>
 			<View style={styles.settingTextContainer}>
 				<Text style={styles.settingTitle}>{title}</Text>
@@ -34,22 +35,22 @@ export default function SettingsScreen() {
 			</View>
 			{showSwitch && (
 				<Switch
-					testID="switch"
-					value={value}
 					onValueChange={onValueChange}
-					trackColor={{ false: '#E0E0E0', true: '#6B4423' }}
+					testID="switch"
 					thumbColor={value ? '#FFFFFF' : '#f4f3f4'}
+					trackColor={{ false: '#E0E0E0', true: '#6B4423' }}
+					value={value}
 				/>
 			)}
 		</TouchableOpacity>
 	)
 
 	const SettingSection = ({
-		title,
 		children,
+		title,
 	}: {
-		title: string
 		children: React.ReactNode
+		title: string
 	}) => (
 		<View style={styles.section}>
 			<Text style={styles.sectionTitle}>{title}</Text>
@@ -58,20 +59,20 @@ export default function SettingsScreen() {
 	)
 
 	return (
-		<SafeAreaView style={styles.container} edges={['bottom']}>
+		<SafeAreaView edges={['bottom']} style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContent}>
 				<SettingSection title="Appearance">
 					<SettingItem
-						title="Dark Mode"
-						subtitle="Use dark theme throughout the app"
-						value={isDarkMode}
 						onValueChange={toggleTheme}
 						showSwitch
+						subtitle="Use dark theme throughout the app"
+						title="Dark Mode"
+						value={isDarkMode}
 					/>
 				</SettingSection>
 
 				<SettingSection title="About">
-					<SettingItem title="Version" subtitle="1.0.0" />
+					<SettingItem subtitle="1.0.0" title="Version" />
 				</SettingSection>
 			</ScrollView>
 		</SafeAreaView>
@@ -80,8 +81,13 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create((theme) => ({
 	container: {
-		flex: 1,
 		backgroundColor: theme.colors.background,
+		flex: 1,
+	},
+	divider: {
+		backgroundColor: theme.colors.border,
+		height: 1,
+		marginHorizontal: theme.spacing.md,
 	},
 	scrollContent: {
 		paddingBottom: theme.spacing.xl,
@@ -89,25 +95,29 @@ const styles = StyleSheet.create((theme) => ({
 	section: {
 		marginTop: theme.spacing.lg,
 	},
-	sectionTitle: {
-		...theme.typography.caption,
-		color: theme.colors.textSecondary,
-		textTransform: 'uppercase',
-		marginHorizontal: theme.spacing.md,
-		marginBottom: theme.spacing.sm,
-	},
 	sectionContent: {
 		backgroundColor: theme.colors.surface,
 		borderRadius: theme.borderRadius.md,
 		marginHorizontal: theme.spacing.md,
 		overflow: 'hidden',
 	},
+	sectionTitle: {
+		...theme.typography.caption,
+		color: theme.colors.textSecondary,
+		marginBottom: theme.spacing.sm,
+		marginHorizontal: theme.spacing.md,
+		textTransform: 'uppercase',
+	},
 	settingItem: {
-		flexDirection: 'row',
 		alignItems: 'center',
+		flexDirection: 'row',
 		justifyContent: 'space-between',
-		padding: theme.spacing.md,
 		minHeight: 60,
+		padding: theme.spacing.md,
+	},
+	settingSubtitle: {
+		...theme.typography.caption,
+		color: theme.colors.textSecondary,
 	},
 	settingTextContainer: {
 		flex: 1,
@@ -117,14 +127,5 @@ const styles = StyleSheet.create((theme) => ({
 		...theme.typography.body,
 		color: theme.colors.text,
 		marginBottom: theme.spacing.xs / 2,
-	},
-	settingSubtitle: {
-		...theme.typography.caption,
-		color: theme.colors.textSecondary,
-	},
-	divider: {
-		height: 1,
-		backgroundColor: theme.colors.border,
-		marginHorizontal: theme.spacing.md,
 	},
 }))
