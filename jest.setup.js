@@ -24,7 +24,7 @@ jest.mock('@lingui/core', () => ({
 
 jest.mock('@lingui/react', () => ({
 	I18nProvider: ({ children }) => children,
-	Trans: ({ id, children }) => children || id,
+	Trans: ({ children, id }) => children || id,
 	useLingui: () => ({
 		_: (id) => id,
 		i18n: {
@@ -40,7 +40,7 @@ jest.mock('@lingui/core/macro', () => ({
 	t: (strings, ...values) => {
 		if (typeof strings === 'string') return strings
 		if (strings && strings.raw) {
-			return strings.raw.reduce((acc, str, i) => acc + str + (values[i] || ''), '')
+			return strings.raw.reduce((accumulator, string_, index) => accumulator + string_ + (values[index] || ''), '')
 		}
 		return strings
 	},
@@ -84,9 +84,9 @@ jest.mock('expo-router', () => ({
 		Screen: () => null,
 	},
 	useRouter: () => ({
+		back: jest.fn(),
 		push: jest.fn(),
 		replace: jest.fn(),
-		back: jest.fn(),
 	}),
 	useSegments: () => [],
 }))
@@ -115,33 +115,26 @@ globalThis.fetch = jest.fn()
 
 // Mock AsyncStorage
 jest.mock('@react-native-async-storage/async-storage', () => ({
-	getItem: jest.fn(() => Promise.resolve(null)),
-	setItem: jest.fn(() => Promise.resolve()),
-	removeItem: jest.fn(() => Promise.resolve()),
 	clear: jest.fn(() => Promise.resolve()),
+	getItem: jest.fn(() => Promise.resolve(null)),
+	removeItem: jest.fn(() => Promise.resolve()),
+	setItem: jest.fn(() => Promise.resolve()),
 }))
 
 // Mock Zeego
 jest.mock('zeego/dropdown-menu', () => ({
-	Root: ({ children }) => children,
-	Trigger: ({ children }) => children,
 	Content: ({ children }) => children,
 	Item: ({ children }) => children,
-	ItemTitle: ({ children }) => children,
 	ItemIcon: () => null,
+	ItemTitle: ({ children }) => children,
+	Root: ({ children }) => children,
+	Trigger: ({ children }) => children,
 }))
 
 // Mock our i18n lib
 jest.mock('@/lib/i18n', () => ({
-	locales: {
-		en: 'English',
-		es: 'Español',
-		pt: 'Português',
-	},
 	defaultLocale: 'en',
 	dynamicActivate: jest.fn(),
-	initI18n: jest.fn(),
-	saveLocale: jest.fn(),
 	getStoredLocale: jest.fn(() => Promise.resolve('en')),
 	i18n: {
 		_: (id) => id,
@@ -149,6 +142,13 @@ jest.mock('@/lib/i18n', () => ({
 		load: jest.fn(),
 		locale: 'en',
 	},
+	initI18n: jest.fn(),
+	locales: {
+		en: 'English',
+		es: 'Español',
+		pt: 'Português',
+	},
+	saveLocale: jest.fn(),
 }))
 
 // Mock LanguageSelector

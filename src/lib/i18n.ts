@@ -2,6 +2,11 @@ import { i18n } from '@lingui/core'
 import { detect, fromNavigator } from '@lingui/detect-locale'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// Static imports for web builds
+import { messages as enMessages } from '../locales/en/messages'
+import { messages as esMessages } from '../locales/es/messages'
+import { messages as ptMessages } from '../locales/pt/messages'
+
 export const locales = {
 	en: 'English',
 	es: 'Español',
@@ -10,22 +15,38 @@ export const locales = {
 
 export const defaultLocale = 'en'
 
+// Static message catalog for web builds
+const messagesCatalog = {
+	en: enMessages,
+	es: esMessages,
+	pt: ptMessages,
+}
+
 /**
- * We do a dynamic import of just the catalog that we need
+ * We do a static import of just the catalog that we need
  * @param locale any locale string
  */
 export async function dynamicActivate(locale: string) {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const { messages } = await import(`../locales/${locale}/messages`)
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-	i18n.load(locale, messages)
-	i18n.activate(locale)
+	try {
+		// Use static imports for web compatibility
+		const messages = messagesCatalog[locale as keyof typeof messagesCatalog] || messagesCatalog[defaultLocale]
+
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		i18n.load(locale, messages)
+		i18n.activate(locale)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.warn(`Failed to load locale ${locale}, falling back to default`, error)
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		i18n.load(defaultLocale, messagesCatalog[defaultLocale])
+		i18n.activate(defaultLocale)
+	}
 }
 
 /**
  * Get the current locale from AsyncStorage
  */
-export async function getStoredLocale(): Promise<null | string> {
+export async function getStoredLocale(): Promise<string | null> {
 	try {
 		return await AsyncStorage.getItem('locale')
 	} catch (error) {
@@ -47,18 +68,16 @@ export async function initI18n() {
 				const stored = await AsyncStorage.getItem('locale')
 				return stored || undefined
 			} catch {
-				return
+				return undefined
 			}
 		},
 		// Fallback to navigator locale
 		fromNavigator(),
 		// Final fallback
-		defaultLocale,
+		defaultLocale
 	)
 
-	const locale = Object.keys(locales).includes(detectedLocale || '')
-		? detectedLocale
-		: defaultLocale
+	const locale = Object.keys(locales).includes(detectedLocale || '') ? detectedLocale : defaultLocale
 
 	await dynamicActivate(locale || defaultLocale)
 	return locale || defaultLocale
