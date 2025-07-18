@@ -10,7 +10,8 @@
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
 		"typecheck": "tsc --noEmit",
-		"test": "jest --watchAll"
+		"test": "jest --watchAll",
+		"build:web": "expo export --platform web"
 	},
 	"dependencies": {
 		"@babel/core": "^7.28.0",
