@@ -1,25 +1,39 @@
 import { StyleSheet } from 'react-native-unistyles'
 
 const lightTheme = {
+	borderRadius: {
+		full: 9999,
+		lg: 16,
+		md: 8,
+		sm: 4,
+	},
 	colors: {
 		background: '#FFFFFF',
-		surface: '#F5F5F5',
-		primary: '#6B4423',
-		secondary: '#8B6F47',
-		text: '#1A1A1A',
-		textSecondary: '#666666',
 		border: '#E0E0E0',
 		error: '#D32F2F',
+		primary: '#6B4423',
+		secondary: '#8B6F47',
 		success: '#388E3C',
+		surface: '#F5F5F5',
+		text: '#1A1A1A',
+		textSecondary: '#666666',
 	},
 	spacing: {
-		xs: 4,
-		sm: 8,
-		md: 16,
 		lg: 24,
+		md: 16,
+		sm: 8,
 		xl: 32,
+		xs: 4,
 	},
 	typography: {
+		body: {
+			fontSize: 16,
+			fontWeight: '400' as const,
+		},
+		caption: {
+			fontSize: 14,
+			fontWeight: '400' as const,
+		},
 		h1: {
 			fontSize: 32,
 			fontWeight: '700' as const,
@@ -32,20 +46,6 @@ const lightTheme = {
 			fontSize: 20,
 			fontWeight: '600' as const,
 		},
-		body: {
-			fontSize: 16,
-			fontWeight: '400' as const,
-		},
-		caption: {
-			fontSize: 14,
-			fontWeight: '400' as const,
-		},
-	},
-	borderRadius: {
-		sm: 4,
-		md: 8,
-		lg: 16,
-		full: 9999,
 	},
 }
 
@@ -53,34 +53,45 @@ const darkTheme = {
 	...lightTheme,
 	colors: {
 		background: '#121212',
-		surface: '#1E1E1E',
-		primary: '#D2691E',
-		secondary: '#DEB887',
-		text: '#FFFFFF',
-		textSecondary: '#B0B0B0',
 		border: '#333333',
 		error: '#EF5350',
+		primary: '#D2691E',
+		secondary: '#DEB887',
 		success: '#66BB6A',
+		surface: '#1E1E1E',
+		text: '#FFFFFF',
+		textSecondary: '#B0B0B0',
 	},
 }
 
-type AppThemes = {
-	light: typeof lightTheme
-	dark: typeof darkTheme
+const breakpoints = {
+	xs: 0,
+	sm: 576,
+	md: 768,
+	lg: 992,
+	xl: 1200,
+	superLarge: 2000,
+	tvLike: 4000,
+} as const
+
+const themes = {
+	dark: darkTheme,
+	light: lightTheme,
 }
+
+type AppThemes = typeof themes
 
 declare module 'react-native-unistyles' {
 	export interface UnistylesThemes extends AppThemes {}
+	// export interface UnistylesBreakpoints extends AppBreakpoints {}
 }
 
 StyleSheet.configure({
-	themes: {
-		light: lightTheme,
-		dark: darkTheme,
-	},
 	settings: {
 		adaptiveThemes: true,
 	},
+	themes,
+	breakpoints,
 })
 
-export { lightTheme, darkTheme }
+export { darkTheme, lightTheme }

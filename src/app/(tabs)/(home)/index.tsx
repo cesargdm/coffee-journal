@@ -1,16 +1,17 @@
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { StyleSheet } from 'react-native-unistyles'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 
-interface CoffeeLog {
-	id: string
-	date: Date
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet } from 'react-native-unistyles'
+
+type CoffeeLog = {
 	coffeeName: string
-	tongueTaste: number
-	retronasal: number
+	date: Date
+	id: string
 	mouthTactile: number
 	overallScore: number
+	retronasal: number
+	tongueTaste: number
 }
 
 // No mock data - start with empty state
@@ -25,8 +26,8 @@ export default function LogsScreen() {
 			</View>
 			<Text style={styles.date}>
 				{item.date.toLocaleDateString('en-US', {
-					month: 'short',
 					day: 'numeric',
+					month: 'short',
 					year: 'numeric',
 				})}
 			</Text>
@@ -57,58 +58,70 @@ export default function LogsScreen() {
 	)
 
 	return (
-		<SafeAreaView style={styles.container} edges={['bottom']}>
+		<SafeAreaView edges={['bottom']} style={styles.container}>
 			<FlatList
-				data={mockLogs}
-				renderItem={renderLogItem}
-				keyExtractor={(item) => item.id}
 				contentContainerStyle={styles.listContent}
-				ListEmptyComponent={EmptyState}
+				data={mockLogs}
 				ItemSeparatorComponent={() => <View style={styles.separator} />}
+				keyExtractor={(item) => item.id}
+				ListEmptyComponent={EmptyState}
+				renderItem={renderLogItem}
 			/>
 		</SafeAreaView>
 	)
 }
 
 const styles = StyleSheet.create((theme) => ({
-	container: {
-		flex: 1,
-		backgroundColor: theme.colors.background,
-	},
-	listContent: {
-		padding: theme.spacing.md,
-		flexGrow: 1,
-	},
-	logItem: {
-		backgroundColor: theme.colors.surface,
-		padding: theme.spacing.md,
-		borderRadius: theme.borderRadius.md,
-	},
-	logHeader: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginBottom: theme.spacing.xs,
-	},
 	coffeeName: {
 		...theme.typography.h3,
 		color: theme.colors.text,
 		flex: 1,
 	},
-	overallScore: {
-		...theme.typography.h2,
-		color: theme.colors.primary,
-		marginLeft: theme.spacing.sm,
+	container: {
+		backgroundColor: theme.colors.background,
+		flex: 1,
 	},
 	date: {
 		...theme.typography.caption,
 		color: theme.colors.textSecondary,
 		marginBottom: theme.spacing.sm,
 	},
-	scoresContainer: {
+	emptyState: {
+		alignItems: 'center',
+		flex: 1,
+		justifyContent: 'center',
+		paddingHorizontal: theme.spacing.xl,
+	},
+	emptyStateSubtext: {
+		...theme.typography.body,
+		color: theme.colors.textSecondary,
+		textAlign: 'center',
+	},
+	emptyStateText: {
+		...theme.typography.h2,
+		color: theme.colors.text,
+		marginBottom: theme.spacing.sm,
+		textAlign: 'center',
+	},
+	listContent: {
+		flexGrow: 1,
+		padding: theme.spacing.md,
+	},
+	logHeader: {
+		alignItems: 'center',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginTop: theme.spacing.sm,
+		marginBottom: theme.spacing.xs,
+	},
+	logItem: {
+		backgroundColor: theme.colors.surface,
+		borderRadius: theme.borderRadius.md,
+		padding: theme.spacing.md,
+	},
+	overallScore: {
+		...theme.typography.h2,
+		color: theme.colors.primary,
+		marginLeft: theme.spacing.sm,
 	},
 	scoreItem: {
 		alignItems: 'center',
@@ -119,28 +132,16 @@ const styles = StyleSheet.create((theme) => ({
 		color: theme.colors.textSecondary,
 		marginBottom: theme.spacing.xs,
 	},
+	scoresContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginTop: theme.spacing.sm,
+	},
 	scoreValue: {
 		...theme.typography.h3,
 		color: theme.colors.text,
 	},
 	separator: {
 		height: theme.spacing.md,
-	},
-	emptyState: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingHorizontal: theme.spacing.xl,
-	},
-	emptyStateText: {
-		...theme.typography.h2,
-		color: theme.colors.text,
-		textAlign: 'center',
-		marginBottom: theme.spacing.sm,
-	},
-	emptyStateSubtext: {
-		...theme.typography.body,
-		color: theme.colors.textSecondary,
-		textAlign: 'center',
 	},
 }))

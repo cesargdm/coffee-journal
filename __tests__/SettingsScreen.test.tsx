@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
-import SettingsScreen from '@/app/(tabs)/settings'
 import { UnistylesRuntime } from 'react-native-unistyles'
+import SettingsScreen from '@/app/(tabs)/settings/index'
 
 // Get the mocked setTheme function
 const mockSetTheme = UnistylesRuntime.setTheme as jest.Mock

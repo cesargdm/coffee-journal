@@ -1,74 +1,26 @@
 {
 	"compilerOptions": {
-		/* Language and Environment */
-		"target": "ES2020",
-		"lib": ["ES2020"],
-		"jsx": "react-native",
-
-		/* Modules */
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"baseUrl": "./src",
-		"paths": {
-			"@/*": ["./*"],
-			"@components/*": ["components/*"],
-			"@styles/*": ["styles/*"],
-			"@app/*": ["app/*"]
-		},
-
-		/* JavaScript Support */
-		"allowJs": true,
-		"checkJs": true,
-
-		/* Emit */
-		"noEmit": true,
-		"declaration": true,
-		"declarationMap": true,
-		"sourceMap": true,
-		"removeComments": true,
-
-		/* Interop Constraints */
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-
-		/* Type Checking */
-		"strict": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true,
-		"strictFunctionTypes": true,
-		"strictBindCallApply": true,
-		"strictPropertyInitialization": true,
-		"noImplicitThis": true,
-		"useUnknownInCatchVariables": true,
+		"allowSyntheticDefaultImports": true,
+		"allowUnreachableCode": false,
 		"alwaysStrict": true,
+		"baseUrl": ".",
+		"exactOptionalPropertyTypes": true,
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"module": "ESNext",
+		"noEmit": true,
+		"noImplicitAny": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"exactOptionalPropertyTypes": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"noUncheckedIndexedAccess": true,
-		"noImplicitOverride": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"allowUnusedLabels": false,
-		"allowUnreachableCode": false,
-
-		/* Completeness */
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"removeComments": true,
 		"skipLibCheck": true,
-
-		/* Performance */
-		"incremental": true,
-		"tsBuildInfoFile": ".tsbuildinfo"
+		"strict": true,
+		"strictNullChecks": true,
+		"types": ["jest", "node"]
 	},
-	"include": ["src/**/*", "src/**/*.json"],
-	"exclude": [
-		"node_modules",
-		"babel.config.js",
-		"metro.config.js",
-		"eslint.config.js",
-		".expo",
-		"dist",
-		"build"
-	]
+	"extends": "expo/tsconfig.base",
+	"include": ["eslint.config.mjs", "src/**/*", "__tests__/**/*"]
 }
