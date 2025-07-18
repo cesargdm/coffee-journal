@@ -18,6 +18,7 @@
 	"dependencies": {
 		"@babel/core": "^7.28.0",
 		"@bottom-tabs/react-navigation": "^0.9.2",
+		"@sentry/react-native": "^6.17.0",
 		"expo": "53.0.20",
 		"expo-build-properties": "~0.14.8",
 		"expo-constants": "~17.1.7",
