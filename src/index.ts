@@ -1,3 +1,4 @@
-import 'expo-router/entry'
+import '@/lib/sentry'
+import '@/lib/styles/unistyles'
 
-import '@/styles/unistyles'
+import 'expo-router/entry'

@@ -43,7 +43,15 @@
 					}
 				}
 			],
-			"react-native-edge-to-edge"
+			"react-native-edge-to-edge",
+			[
+				"@sentry/react-native/expo",
+				{
+					"url": "https://sentry.io/",
+					"project": "coffee-log",
+					"organization": "cesargdm"
+				}
+			]
 		],
 		"extra": {
 			"eas": {
