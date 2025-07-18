@@ -65,13 +65,13 @@ const darkTheme = {
 }
 
 const breakpoints = {
-	xs: 0,
-	sm: 576,
-	md: 768,
 	lg: 992,
-	xl: 1200,
+	md: 768,
+	sm: 576,
 	superLarge: 2000,
 	tvLike: 4000,
+	xl: 1200,
+	xs: 0,
 } as const
 
 const themes = {
@@ -79,19 +79,20 @@ const themes = {
 	light: lightTheme,
 }
 
+type AppBreakpoints = typeof breakpoints
 type AppThemes = typeof themes
 
 declare module 'react-native-unistyles' {
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/consistent-type-definitions
+	export interface UnistylesBreakpoints extends AppBreakpoints {}
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/consistent-type-definitions
 	export interface UnistylesThemes extends AppThemes {}
-	// export interface UnistylesBreakpoints extends AppBreakpoints {}
 }
 
 StyleSheet.configure({
-	settings: {
-		adaptiveThemes: true,
-	},
-	themes,
 	breakpoints,
+	settings: { adaptiveThemes: true },
+	themes,
 })
 
 export { darkTheme, lightTheme }

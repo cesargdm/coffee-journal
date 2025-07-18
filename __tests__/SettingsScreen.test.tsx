@@ -1,6 +1,8 @@
-import React from 'react'
-import { render, fireEvent } from '@testing-library/react-native'
+import type { Switch } from 'react-native'
+
+import { fireEvent, render } from '@testing-library/react-native'
 import { UnistylesRuntime } from 'react-native-unistyles'
+
 import SettingsScreen from '@/app/(tabs)/settings/index'
 
 // Get the mocked setTheme function
@@ -34,7 +36,7 @@ describe('SettingsScreen', () => {
 
 		// Find all switches and get the first one (dark mode toggle)
 		const switches = getAllByTestId('switch')
-		const themeSwitch = switches[0]
+		const themeSwitch = switches.at(0) as Switch
 
 		// Trigger the theme toggle
 		fireEvent(themeSwitch, 'onValueChange', true)

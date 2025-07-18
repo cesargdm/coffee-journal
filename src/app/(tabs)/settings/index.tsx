@@ -1,4 +1,3 @@
-import type React from 'react'
 import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native'
 
 import { SafeAreaView } from 'react-native-safe-area-context'

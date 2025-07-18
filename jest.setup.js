@@ -1,3 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
+import { jest } from '@jest/globals'
+
 // Mock Expo winter runtime
 globalThis.__ExpoImportMetaRegistry = {}
 

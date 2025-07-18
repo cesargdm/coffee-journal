@@ -1,5 +1,6 @@
-import { Stack } from 'expo-router'
 import { Button } from 'react-native'
+
+import { Stack } from 'expo-router'
 
 export default function HomeLayout() {
 	return (
@@ -7,10 +8,10 @@ export default function HomeLayout() {
 			<Stack.Screen
 				name="index"
 				options={{
-					title: 'Logs',
 					headerRight() {
 						return <Button title="Add Log" />
 					},
+					title: 'Logs',
 				}}
 			/>
 		</Stack>
