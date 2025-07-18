@@ -15,5 +15,5 @@
     "types": ["react", "react-native"]
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", ".eslintrc.js"]
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "eslint.config.js"]
 }
