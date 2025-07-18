@@ -1,7 +1,11 @@
 import { Tabs } from 'expo-router'
-import { Platform } from 'react-native'
+import { Platform, TouchableOpacity, Text } from 'react-native'
 
 export default function TabLayout() {
+	const handleCreateLog = () => {
+		// TODO: Navigate to create log screen
+	}
+
 	return (
 		<Tabs
 			screenOptions={{
@@ -18,6 +22,22 @@ export default function TabLayout() {
 							ios: { sfSymbol: 'list.bullet', color },
 							android: require('../../../assets/list-icon.png'),
 						}),
+					headerRight: () => (
+						<TouchableOpacity
+							onPress={handleCreateLog}
+							style={{
+								marginRight: 16,
+								backgroundColor: '#6B4423',
+								paddingHorizontal: 12,
+								paddingVertical: 6,
+								borderRadius: 16,
+							}}
+						>
+							<Text style={{ color: 'white', fontSize: 14, fontWeight: '600' }}>
+								+ Add Log
+							</Text>
+						</TouchableOpacity>
+					),
 				}}
 			/>
 			<Tabs.Screen

@@ -70,42 +70,8 @@ export default function SettingsScreen() {
 					/>
 				</SettingSection>
 
-				<SettingSection title="Coffee Logging">
-					<SettingItem title="Default Scoring Range" subtitle="1-10 scale" />
-					<View style={styles.divider} />
-					<SettingItem
-						title="Quick Add"
-						subtitle="Enable quick add button on home screen"
-						value={true}
-						onValueChange={() => {}}
-						showSwitch
-					/>
-				</SettingSection>
-
-				<SettingSection title="Data">
-					<SettingItem
-						title="Export Data"
-						subtitle="Export your coffee logs as CSV"
-					/>
-					<View style={styles.divider} />
-					<SettingItem
-						title="Import Data"
-						subtitle="Import coffee logs from CSV"
-					/>
-				</SettingSection>
-
 				<SettingSection title="About">
 					<SettingItem title="Version" subtitle="1.0.0" />
-					<View style={styles.divider} />
-					<SettingItem
-						title="Privacy Policy"
-						subtitle="View our privacy policy"
-					/>
-					<View style={styles.divider} />
-					<SettingItem
-						title="Terms of Service"
-						subtitle="View our terms of service"
-					/>
 				</SettingSection>
 			</ScrollView>
 		</SafeAreaView>

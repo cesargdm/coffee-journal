@@ -70,6 +70,8 @@ Follow conventional commits:
 - Always use `bun add` for adding dependencies
 - Prefer well-maintained packages with TypeScript support
 - Document why a dependency was added in the commit message
+- **CRITICAL**: After adding, removing, or updating any dependencies, ALWAYS run `bunx expo install --fix` to ensure compatibility with the current Expo SDK version
+- This command automatically updates packages to compatible versions and prevents version conflicts
 
 ## Final Checklist Before Completing Any Task
 
@@ -79,3 +81,4 @@ Follow conventional commits:
 - [ ] No console.log statements (except console.warn/error where appropriate)
 - [ ] All TODOs are either resolved or documented with issue numbers
 - [ ] New features have been manually tested on at least one platform
+- [ ] If dependencies were modified, `bunx expo install --fix` was run to ensure compatibility
