@@ -9,7 +9,12 @@ export default function HomeLayout() {
 				name="index"
 				options={{
 					headerRight() {
-						return <Button title="Add Log" onPress={() => router.push('/(tabs)/(home)/new-log')} />
+						return (
+							<Button
+								title="Add Log"
+								onPress={() => router.push('/(tabs)/(home)/new-log')}
+							/>
+						)
 					},
 					title: 'Logs',
 				}}

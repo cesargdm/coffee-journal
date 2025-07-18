@@ -1,4 +1,11 @@
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+	Alert,
+	ScrollView,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 import { useForm } from '@tanstack/react-form'
@@ -9,10 +16,22 @@ import { router } from 'expo-router'
 
 // Zod schema for form validation
 const coffeeLogSchema = z.object({
-	coffeeName: z.string().min(1, 'Coffee name is required').max(100, 'Coffee name too long'),
-	tongueTaste: z.number().min(1, 'Score must be at least 1').max(10, 'Score must be at most 10'),
-	retronasal: z.number().min(1, 'Score must be at least 1').max(10, 'Score must be at most 10'),
-	mouthTactile: z.number().min(1, 'Score must be at least 1').max(10, 'Score must be at most 10'),
+	coffeeName: z
+		.string()
+		.min(1, 'Coffee name is required')
+		.max(100, 'Coffee name too long'),
+	tongueTaste: z
+		.number()
+		.min(1, 'Score must be at least 1')
+		.max(10, 'Score must be at most 10'),
+	retronasal: z
+		.number()
+		.min(1, 'Score must be at least 1')
+		.max(10, 'Score must be at most 10'),
+	mouthTactile: z
+		.number()
+		.min(1, 'Score must be at least 1')
+		.max(10, 'Score must be at most 10'),
 	notes: z.string().optional(),
 })
 
@@ -30,7 +49,8 @@ export default function NewLogScreen() {
 		onSubmit: async ({ value }) => {
 			try {
 				// Calculate overall score as average of the three scores
-				const overallScore = (value.tongueTaste + value.retronasal + value.mouthTactile) / 3
+				const overallScore =
+					(value.tongueTaste + value.retronasal + value.mouthTactile) / 3
 
 				// Here you would typically save to your data store
 				// For now, we'll just show a success message
@@ -42,7 +62,7 @@ export default function NewLogScreen() {
 							text: 'OK',
 							onPress: () => router.back(),
 						},
-					]
+					],
 				)
 			} catch (error) {
 				Alert.alert('Error', 'Failed to create coffee log. Please try again.')
@@ -51,12 +71,12 @@ export default function NewLogScreen() {
 		validatorAdapter: zodValidator(),
 	})
 
-	const ScoreSlider = ({ 
-		label, 
-		value, 
-		onChange, 
-		error 
-	}: { 
+	const ScoreSlider = ({
+		label,
+		value,
+		onChange,
+		error,
+	}: {
 		label: string
 		value: number
 		onChange: (value: number) => void
@@ -94,10 +114,15 @@ export default function NewLogScreen() {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				style={styles.scrollView}
+				showsVerticalScrollIndicator={false}
+			>
 				<View style={styles.content}>
 					<Text style={styles.title}>New Coffee Log</Text>
-					<Text style={styles.subtitle}>Record your coffee tasting experience</Text>
+					<Text style={styles.subtitle}>
+						Record your coffee tasting experience
+					</Text>
 
 					{/* Coffee Name Input */}
 					<form.Field
@@ -109,7 +134,12 @@ export default function NewLogScreen() {
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Coffee Name</Text>
 								<View style={styles.inputWrapper}>
-									<Ionicons name="cafe" size={20} color="#8B6F47" style={styles.inputIcon} />
+									<Ionicons
+										name="cafe"
+										size={20}
+										color="#8B6F47"
+										style={styles.inputIcon}
+									/>
 									<TextInput
 										style={styles.textInput}
 										value={field.state.value}
@@ -119,7 +149,9 @@ export default function NewLogScreen() {
 									/>
 								</View>
 								{field.state.meta.errors.length > 0 && (
-									<Text style={styles.errorText}>{field.state.meta.errors[0]}</Text>
+									<Text style={styles.errorText}>
+										{field.state.meta.errors[0]}
+									</Text>
 								)}
 							</View>
 						)}
@@ -180,7 +212,12 @@ export default function NewLogScreen() {
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Notes (Optional)</Text>
 								<View style={styles.inputWrapper}>
-									<Ionicons name="document-text" size={20} color="#8B6F47" style={styles.inputIcon} />
+									<Ionicons
+										name="document-text"
+										size={20}
+										color="#8B6F47"
+										style={styles.inputIcon}
+									/>
 									<TextInput
 										style={[styles.textInput, styles.notesInput]}
 										value={field.state.value}
@@ -201,17 +238,25 @@ export default function NewLogScreen() {
 						selector={(state) => [state.canSubmit, state.isSubmitting]}
 						children={([canSubmit, isSubmitting]) => (
 							<TouchableOpacity
-								style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}
+								style={[
+									styles.submitButton,
+									!canSubmit && styles.submitButtonDisabled,
+								]}
 								onPress={form.handleSubmit}
 								disabled={!canSubmit || isSubmitting}
 							>
-								<Ionicons 
-									name="checkmark-circle" 
-									size={20} 
-									color={canSubmit ? "#FFFFFF" : "#B0B0B0"} 
-									style={styles.submitIcon} 
+								<Ionicons
+									name="checkmark-circle"
+									size={20}
+									color={canSubmit ? '#FFFFFF' : '#B0B0B0'}
+									style={styles.submitIcon}
 								/>
-								<Text style={[styles.submitButtonText, !canSubmit && styles.submitButtonTextDisabled]}>
+								<Text
+									style={[
+										styles.submitButtonText,
+										!canSubmit && styles.submitButtonTextDisabled,
+									]}
+								>
 									{isSubmitting ? 'Creating Log...' : 'Create Log'}
 								</Text>
 							</TouchableOpacity>
