@@ -1,8 +1,9 @@
 {
 	"expo": {
-		"name": "Coffee Taste Logger",
-		"slug": "coffee-taste-logger",
+		"name": "Coffee Journal",
+		"slug": "coffee-journal",
 		"version": "1.0.0",
+		"description": "A beautiful and intuitive app for logging and tracking your coffee tasting experiences. Record detailed notes about taste, aroma, and brewing methods to improve your coffee journey.",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
@@ -13,19 +14,21 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.coffeejournal.app"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"package": "com.coffeejournal.app"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png",
 			"bundler": "metro"
 		},
-		"scheme": "coffee-taste-logger",
+		"scheme": "coffee-journal",
 		"experiments": {
 			"tsconfigPaths": true
 		},
