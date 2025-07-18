@@ -12,6 +12,40 @@ jest.mock('react-native-nitro-modules', () => ({
 	},
 }))
 
+// Mock Lingui
+jest.mock('@lingui/core', () => ({
+	i18n: {
+		_: (id) => id,
+		activate: jest.fn(),
+		load: jest.fn(),
+		locale: 'en',
+	},
+}))
+
+jest.mock('@lingui/react', () => ({
+	I18nProvider: ({ children }) => children,
+	Trans: ({ id, children }) => children || id,
+	useLingui: () => ({
+		_: (id) => id,
+		i18n: {
+			_: (id) => id,
+			activate: jest.fn(),
+			load: jest.fn(),
+			locale: 'en',
+		},
+	}),
+}))
+
+jest.mock('@lingui/core/macro', () => ({
+	t: (strings, ...values) => {
+		if (typeof strings === 'string') return strings
+		if (strings && strings.raw) {
+			return strings.raw.reduce((acc, str, i) => acc + str + (values[i] || ''), '')
+		}
+		return strings
+	},
+}))
+
 // Mock react-native-unistyles
 jest.mock('react-native-unistyles', () => ({
 	createStyleSheet: (styles) => styles,
@@ -46,14 +80,13 @@ jest.mock('expo-router', () => ({
 	Stack: {
 		Screen: () => null,
 	},
-	Tabs: () => null,
-	useGlobalSearchParams: () => ({}),
-	useLocalSearchParams: () => ({}),
-	usePathname: () => '/',
+	Tabs: {
+		Screen: () => null,
+	},
 	useRouter: () => ({
-		back: jest.fn(),
 		push: jest.fn(),
 		replace: jest.fn(),
+		back: jest.fn(),
 	}),
 	useSegments: () => [],
 }))
@@ -79,3 +112,51 @@ jest.mock('expo-linking', () => ({
 
 // Setup fetch mock
 globalThis.fetch = jest.fn()
+
+// Mock AsyncStorage
+jest.mock('@react-native-async-storage/async-storage', () => ({
+	getItem: jest.fn(() => Promise.resolve(null)),
+	setItem: jest.fn(() => Promise.resolve()),
+	removeItem: jest.fn(() => Promise.resolve()),
+	clear: jest.fn(() => Promise.resolve()),
+}))
+
+// Mock Zeego
+jest.mock('zeego/dropdown-menu', () => ({
+	Root: ({ children }) => children,
+	Trigger: ({ children }) => children,
+	Content: ({ children }) => children,
+	Item: ({ children }) => children,
+	ItemTitle: ({ children }) => children,
+	ItemIcon: () => null,
+}))
+
+// Mock our i18n lib
+jest.mock('@/lib/i18n', () => ({
+	locales: {
+		en: 'English',
+		es: 'Español',
+		pt: 'Português',
+	},
+	defaultLocale: 'en',
+	dynamicActivate: jest.fn(),
+	initI18n: jest.fn(),
+	saveLocale: jest.fn(),
+	getStoredLocale: jest.fn(() => Promise.resolve('en')),
+	i18n: {
+		_: (id) => id,
+		activate: jest.fn(),
+		load: jest.fn(),
+		locale: 'en',
+	},
+}))
+
+// Mock LanguageSelector
+jest.mock('@/components/LanguageSelector', () => ({
+	LanguageSelector: () => null,
+}))
+
+// Mock I18nProvider
+jest.mock('@/components/I18nProvider', () => ({
+	I18nProvider: ({ children }) => children,
+}))
