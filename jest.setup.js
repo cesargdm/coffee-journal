@@ -12,6 +12,20 @@ jest.mock('react-native-nitro-modules', () => ({
 	},
 }))
 
+// Mock Lingui runtime
+jest.mock('@lingui/react', () => ({
+	I18nProvider: ({ children }) => children,
+	useLingui: () => ({
+		_: (id) => id,
+		i18n: {
+			_: (id) => id,
+			activate: jest.fn(),
+			load: jest.fn(),
+			locale: 'en',
+		},
+	}),
+}))
+
 // Mock react-native-unistyles
 jest.mock('react-native-unistyles', () => ({
 	createStyleSheet: (styles) => styles,
@@ -46,10 +60,9 @@ jest.mock('expo-router', () => ({
 	Stack: {
 		Screen: () => null,
 	},
-	Tabs: () => null,
-	useGlobalSearchParams: () => ({}),
-	useLocalSearchParams: () => ({}),
-	usePathname: () => '/',
+	Tabs: {
+		Screen: () => null,
+	},
 	useRouter: () => ({
 		back: jest.fn(),
 		push: jest.fn(),
@@ -79,3 +92,51 @@ jest.mock('expo-linking', () => ({
 
 // Setup fetch mock
 globalThis.fetch = jest.fn()
+
+// Mock AsyncStorage
+jest.mock('@react-native-async-storage/async-storage', () => ({
+	clear: jest.fn(() => Promise.resolve()),
+	getItem: jest.fn(() => Promise.resolve(null)),
+	removeItem: jest.fn(() => Promise.resolve()),
+	setItem: jest.fn(() => Promise.resolve()),
+}))
+
+// Mock Zeego
+jest.mock('zeego/dropdown-menu', () => ({
+	Content: ({ children }) => children,
+	Item: ({ children }) => children,
+	ItemIcon: () => null,
+	ItemTitle: ({ children }) => children,
+	Root: ({ children }) => children,
+	Trigger: ({ children }) => children,
+}))
+
+// Mock our i18n lib
+jest.mock('@/lib/i18n', () => ({
+	defaultLocale: 'en',
+	dynamicActivate: jest.fn(),
+	getStoredLocale: jest.fn(() => Promise.resolve('en')),
+	i18n: {
+		_: (id) => id,
+		activate: jest.fn(),
+		load: jest.fn(),
+		locale: 'en',
+	},
+	initI18n: jest.fn(),
+	locales: {
+		en: 'English',
+		es: 'Español',
+		pt: 'Português',
+	},
+	saveLocale: jest.fn(),
+}))
+
+// Mock LanguageSelector
+jest.mock('@/components/LanguageSelector', () => ({
+	LanguageSelector: () => null,
+}))
+
+// Mock I18nProvider
+jest.mock('@/components/I18nProvider', () => ({
+	I18nProvider: ({ children }) => children,
+}))
