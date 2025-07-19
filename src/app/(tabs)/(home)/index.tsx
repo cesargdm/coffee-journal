@@ -1,6 +1,6 @@
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 
-import { Trans } from '@lingui/react'
+import { useLingui } from '@lingui/react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 
@@ -18,6 +18,8 @@ type CoffeeLog = {
 const mockLogs: CoffeeLog[] = []
 
 export default function LogsScreen() {
+	const { _ } = useLingui()
+
 	const renderLogItem = ({ item }: { item: CoffeeLog }) => (
 		<TouchableOpacity style={styles.logItem}>
 			<View style={styles.logHeader}>
@@ -27,19 +29,19 @@ export default function LogsScreen() {
 			<View style={styles.scoreRow}>
 				<View style={styles.scoreItem}>
 					<Text style={styles.scoreLabel}>
-						<Trans id="tongue" />
+						{_('Tongue')}
 					</Text>
 					<Text style={styles.scoreValue}>{item.tongueTaste.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
 					<Text style={styles.scoreLabel}>
-						<Trans id="retronasal" />
+						{_('Retronasal')}
 					</Text>
 					<Text style={styles.scoreValue}>{item.retronasal.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
 					<Text style={styles.scoreLabel}>
-						<Trans id="tactile" />
+						{_('Tactile')}
 					</Text>
 					<Text style={styles.scoreValue}>{item.mouthTactile.toFixed(1)}</Text>
 				</View>
@@ -50,10 +52,10 @@ export default function LogsScreen() {
 	const renderEmptyState = () => (
 		<View style={styles.emptyState}>
 			<Text style={styles.emptyTitle}>
-				<Trans id="create-first-log" />
+				{_('Create your first coffee log to start your journey')}
 			</Text>
 			<Text style={styles.emptySubtitle}>
-				<Trans id="start-coffee-journey" />
+				{_('Start your coffee journey by recording your first tasting experience')}
 			</Text>
 		</View>
 	)

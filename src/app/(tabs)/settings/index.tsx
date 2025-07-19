@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native'
 
-import { t } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
@@ -34,26 +33,14 @@ export default function SettingsScreen() {
 		setCurrentLocale(locale)
 	}
 
-	const SettingsSection = ({
-		children,
-		title,
-	}: {
-		children: React.ReactNode
-		title: string
-	}) => (
+	const SettingsSection = ({ children, title }: { children: React.ReactNode; title: string }) => (
 		<View style={styles.section}>
 			<Text style={styles.sectionTitle}>{title}</Text>
 			{children}
 		</View>
 	)
 
-	const SettingsItem = ({
-		children,
-		onPress,
-	}: {
-		children: React.ReactNode
-		onPress?: () => void
-	}) => (
+	const SettingsItem = ({ children, onPress }: { children: React.ReactNode; onPress?: () => void }) => (
 		<TouchableOpacity onPress={onPress} style={styles.item}>
 			{children}
 		</TouchableOpacity>
@@ -62,39 +49,34 @@ export default function SettingsScreen() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContainer}>
-				<SettingsSection title={_(t`appearance`)}>
+				<SettingsSection title={_('Appearance')}>
 					<SettingsItem onPress={handleThemeToggle}>
 						<View style={styles.itemContent}>
 							<View style={styles.itemLeft}>
-								<Text style={styles.itemTitle}>{_(t`dark-mode`)}</Text>
-								<Text style={styles.itemSubtitle}>
-									{_(t`dark-theme-subtitle`)}
-								</Text>
+								<Text style={styles.itemTitle}>{_('Dark Mode')}</Text>
+								<Text style={styles.itemSubtitle}>{_('Use dark theme throughout the app')}</Text>
 							</View>
 							<Switch onValueChange={handleThemeToggle} value={isDarkMode} />
 						</View>
 					</SettingsItem>
 				</SettingsSection>
 
-				<SettingsSection title={_(t`language`)}>
+				<SettingsSection title={_('Language')}>
 					<SettingsItem>
 						<View style={styles.itemContent}>
 							<View style={styles.itemLeft}>
-								<Text style={styles.itemTitle}>{_(t`language`)}</Text>
+								<Text style={styles.itemTitle}>{_('Language')}</Text>
 							</View>
-							<LanguageSelector
-								currentLocale={currentLocale}
-								onLocaleChange={handleLocaleChange}
-							/>
+							<LanguageSelector currentLocale={currentLocale} onLocaleChange={handleLocaleChange} />
 						</View>
 					</SettingsItem>
 				</SettingsSection>
 
-				<SettingsSection title={_(t`about`)}>
+				<SettingsSection title={_('About')}>
 					<SettingsItem>
 						<View style={styles.itemContent}>
 							<View style={styles.itemLeft}>
-								<Text style={styles.itemTitle}>{_(t`version`)}</Text>
+								<Text style={styles.itemTitle}>{_('Version')}</Text>
 							</View>
 							<Text style={styles.itemValue}>1.0.0</Text>
 						</View>

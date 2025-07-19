@@ -12,19 +12,9 @@ jest.mock('react-native-nitro-modules', () => ({
 	},
 }))
 
-// Mock Lingui
-jest.mock('@lingui/core', () => ({
-	i18n: {
-		_: (id) => id,
-		activate: jest.fn(),
-		load: jest.fn(),
-		locale: 'en',
-	},
-}))
-
+// Mock Lingui runtime
 jest.mock('@lingui/react', () => ({
 	I18nProvider: ({ children }) => children,
-	Trans: ({ children, id }) => children || id,
 	useLingui: () => ({
 		_: (id) => id,
 		i18n: {
@@ -34,16 +24,6 @@ jest.mock('@lingui/react', () => ({
 			locale: 'en',
 		},
 	}),
-}))
-
-jest.mock('@lingui/core/macro', () => ({
-	t: (strings, ...values) => {
-		if (typeof strings === 'string') return strings
-		if (strings && strings.raw) {
-			return strings.raw.reduce((accumulator, string_, index) => accumulator + string_ + (values[index] || ''), '')
-		}
-		return strings
-	},
 }))
 
 // Mock react-native-unistyles
