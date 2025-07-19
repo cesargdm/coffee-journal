@@ -14,11 +14,16 @@ export const defaultLocale = 'en'
 const messagesCatalog = {
   en: {
     'About': 'About',
+    'Add Log': 'Add Log',
     'Appearance': 'Appearance',
     'Create your first coffee log to start your journey': 'Create your first coffee log to start your journey',
     'Dark Mode': 'Dark Mode',
+    'Home': 'Home',
     'Language': 'Language',
+    'Logs': 'Logs',
+    'New Log': 'New Log',
     'Retronasal': 'Retronasal',
+    'Settings': 'Settings',
     'Start your coffee journey by recording your first tasting experience': 'Start your coffee journey by recording your first tasting experience',
     'Tactile': 'Tactile',
     'Tongue': 'Tongue',
@@ -27,11 +32,16 @@ const messagesCatalog = {
   },
   es: {
     'About': 'Acerca de',
+    'Add Log': 'Agregar Registro',
     'Appearance': 'Apariencia',
     'Create your first coffee log to start your journey': 'Crea tu primer registro de café para comenzar tu viaje',
     'Dark Mode': 'Modo Oscuro',
+    'Home': 'Inicio',
     'Language': 'Idioma',
+    'Logs': 'Registros',
+    'New Log': 'Nuevo Registro',
     'Retronasal': 'retronasal',
+    'Settings': 'Configuración',
     'Start your coffee journey by recording your first tasting experience': 'Comienza tu viaje cafetero',
     'Tactile': 'táctil',
     'Tongue': 'lengua',
@@ -40,11 +50,16 @@ const messagesCatalog = {
   },
   pt: {
     'About': 'Sobre',
+    'Add Log': 'Adicionar Registro',
     'Appearance': 'Aparência',
     'Create your first coffee log to start your journey': 'Crie seu primeiro registro de café para começar sua jornada',
     'Dark Mode': 'Modo Escuro',
+    'Home': 'Início',
     'Language': 'Idioma',
+    'Logs': 'Registros',
+    'New Log': 'Novo Registro',
     'Retronasal': 'retronasal',
+    'Settings': 'Configurações',
     'Start your coffee journey by recording your first tasting experience': 'Comece sua jornada do café',
     'Tactile': 'tátil',
     'Tongue': 'língua',
@@ -60,7 +75,8 @@ const messagesCatalog = {
 export function dynamicActivate(locale: string) {
   try {
     // Use static imports for web compatibility
-    const messages = messagesCatalog[locale as keyof typeof messagesCatalog] || messagesCatalog[defaultLocale]
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const messages = messagesCatalog[locale as keyof typeof messagesCatalog] ?? messagesCatalog[defaultLocale]
     
     i18n.load(locale, messages)
     i18n.activate(locale)
@@ -75,7 +91,7 @@ export function dynamicActivate(locale: string) {
 /**
  * Get the current locale from AsyncStorage
  */
-export async function getStoredLocale(): Promise<string | null> {
+export async function getStoredLocale(): Promise<null | string> {
   try {
     return await AsyncStorage.getItem('locale')
   } catch (error) {
@@ -88,7 +104,7 @@ export async function getStoredLocale(): Promise<string | null> {
 /**
  * Initialize i18n with the default locale
  */
-export async function initI18n() {
+export function initI18n() {
   // Try to detect the locale from various sources
   const detectedLocale = detect(
     // Try to get from AsyncStorage first
@@ -97,7 +113,7 @@ export async function initI18n() {
         const stored = await AsyncStorage.getItem('locale')
         return stored
       } catch {
-        return undefined
+        // Return undefined instead of useless undefined
       }
     },
     // Fallback to navigator locale

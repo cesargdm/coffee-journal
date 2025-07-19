@@ -13,9 +13,9 @@ export function I18nProvider({ children }: I18nProviderProps) {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		const setupI18n = async () => {
+		const setupI18n = () => {
 			try {
-				await initI18n()
+				initI18n()
 			} catch (error) {
 				// eslint-disable-next-line no-console
 				console.error('Failed to initialize i18n:', error)
@@ -24,7 +24,7 @@ export function I18nProvider({ children }: I18nProviderProps) {
 			}
 		}
 
-		void setupI18n()
+		setupI18n()
 	}, [])
 
 	if (isLoading) {
@@ -36,5 +36,9 @@ export function I18nProvider({ children }: I18nProviderProps) {
 		)
 	}
 
-	return <LinguiI18nProvider i18n={i18n}>{children}</LinguiI18nProvider>
+	return (
+		<LinguiI18nProvider i18n={i18n}>
+			{children}
+		</LinguiI18nProvider>
+	)
 }

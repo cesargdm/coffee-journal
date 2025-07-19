@@ -16,7 +16,7 @@ export function LanguageSelector({
 }: LanguageSelectorProps) {
 	const handleLanguageChange = async (locale: string) => {
 		if (locale !== currentLocale) {
-			await dynamicActivate(locale)
+			dynamicActivate(locale)
 			await saveLocale(locale)
 			onLocaleChange?.(locale)
 		}

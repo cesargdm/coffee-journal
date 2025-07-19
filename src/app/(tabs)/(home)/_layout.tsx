@@ -1,8 +1,11 @@
 import { Button } from 'react-native'
 
+import { useLingui } from '@lingui/react'
 import { router, Stack } from 'expo-router'
 
 export default function HomeLayout() {
+	const { _ } = useLingui()
+
 	return (
 		<Stack>
 			<Stack.Screen
@@ -12,18 +15,18 @@ export default function HomeLayout() {
 						return (
 							<Button
 								onPress={() => router.push('/(tabs)/(home)/new-log')}
-								title="Add Log"
+								title={_('Add Log')}
 							/>
 						)
 					},
-					title: 'Logs',
+					title: _('Logs'),
 				}}
 			/>
 			<Stack.Screen
 				name="new-log"
 				options={{
 					presentation: 'modal',
-					title: 'New Log',
+					title: _('New Log'),
 				}}
 			/>
 		</Stack>
