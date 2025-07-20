@@ -3,6 +3,7 @@
 ## Problem
 
 Cloudflare Pages build was failing with the error:
+
 ```
 "ctx.opts.onMessageExtracted is not a function"
 ```
@@ -25,15 +26,13 @@ module.exports = function (api) {
 	api.cache(true)
 
 	// Skip extraction plugin in production builds, tests, or when explicitly disabled
-	const skipExtraction = 
+	const skipExtraction =
 		process.env.NODE_ENV === 'production' ||
 		process.env.SKIP_LINGUI_EXTRACT === 'true' ||
 		api.env('test') ||
 		api.env('production')
 
-	const plugins = [
-		['react-native-unistyles/plugin', { root: 'src' }]
-	]
+	const plugins = [['react-native-unistyles/plugin', { root: 'src' }]]
 
 	// Only add extraction plugin when not skipped
 	if (!skipExtraction) {
@@ -62,9 +61,9 @@ SKIP_LINGUI_EXTRACT=true
 
 ```json
 {
-  "scripts": {
-    "build:web": "SKIP_LINGUI_EXTRACT=true NODE_ENV=production expo export -p web && ./config/update-asset-paths.sh"
-  }
+	"scripts": {
+		"build:web": "SKIP_LINGUI_EXTRACT=true NODE_ENV=production expo export -p web && ./config/update-asset-paths.sh"
+	}
 }
 ```
 
@@ -83,18 +82,18 @@ import { messages as esMessages } from '../locales/es/messages'
 import { messages as ptMessages } from '../locales/pt/messages'
 
 export const locales = {
-  en: 'English',
-  es: 'Español',
-  pt: 'Português',
+	en: 'English',
+	es: 'Español',
+	pt: 'Português',
 }
 
 export const defaultLocale = 'en'
 
 // Static message catalog for web builds
 const messagesCatalog = {
-  en: enMessages,
-  es: esMessages,
-  pt: ptMessages,
+	en: enMessages,
+	es: esMessages,
+	pt: ptMessages,
 }
 
 /**
@@ -102,17 +101,22 @@ const messagesCatalog = {
  * @param locale any locale string
  */
 export async function dynamicActivate(locale: string) {
-  try {
-    // Use static imports for web compatibility
-    const messages = messagesCatalog[locale as keyof typeof messagesCatalog] || messagesCatalog[defaultLocale]
-    
-    i18n.load(locale, messages)
-    i18n.activate(locale)
-  } catch (error) {
-    console.warn(`Failed to load locale ${locale}, falling back to default`, error)
-    i18n.load(defaultLocale, messagesCatalog[defaultLocale])
-    i18n.activate(defaultLocale)
-  }
+	try {
+		// Use static imports for web compatibility
+		const messages =
+			messagesCatalog[locale as keyof typeof messagesCatalog] ||
+			messagesCatalog[defaultLocale]
+
+		i18n.load(locale, messages)
+		i18n.activate(locale)
+	} catch (error) {
+		console.warn(
+			`Failed to load locale ${locale}, falling back to default`,
+			error,
+		)
+		i18n.load(defaultLocale, messagesCatalog[defaultLocale])
+		i18n.activate(defaultLocale)
+	}
 }
 
 // ... rest of the configuration
@@ -121,21 +125,25 @@ export async function dynamicActivate(locale: string) {
 ## Key Changes Made
 
 ### 1. **Conditional Plugin Loading**
+
 - The Lingui extraction plugin is only loaded in development mode
 - Production builds, tests, and web builds skip the extraction plugin entirely
 - Uses environment variables for explicit control
 
 ### 2. **Environment Detection**
+
 - Multiple detection methods for different build environments
 - Explicit environment variable `SKIP_LINGUI_EXTRACT` for fine control
 - Production environment detection via `NODE_ENV`
 
 ### 3. **Static Imports for Web**
+
 - Replaced dynamic imports with static imports for web compatibility
 - Pre-compiled message catalogs are imported at build time
 - Fallback handling for missing locales
 
 ### 4. **Build Script Updates**
+
 - Environment variables set in build command
 - Clear separation between development and production workflows
 
@@ -165,16 +173,19 @@ SKIP_LINGUI_EXTRACT=true NODE_ENV=production npx expo export -p web
 ## Development Workflow
 
 ### 1. **Extract Messages** (Development only)
+
 ```bash
 npm run i18n:extract
 ```
 
 ### 2. **Compile Messages** (Before build)
+
 ```bash
 npm run i18n:compile
 ```
 
 ### 3. **Build for Web**
+
 ```bash
 npm run build:web
 ```
@@ -182,18 +193,21 @@ npm run build:web
 ## Testing the Fix
 
 ### Local Development
+
 ```bash
 npm start
 # Extraction plugin should work normally
 ```
 
 ### Production Build
+
 ```bash
 npm run build:web
 # Should build without "onMessageExtracted" error
 ```
 
 ### Test Suite
+
 ```bash
 npm test
 # Should run with proper mocks

@@ -28,21 +28,15 @@ export default function LogsScreen() {
 			</View>
 			<View style={styles.scoreRow}>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>
-						{_('Tongue')}
-					</Text>
+					<Text style={styles.scoreLabel}>{_('Tongue')}</Text>
 					<Text style={styles.scoreValue}>{item.tongueTaste.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>
-						{_('Retronasal')}
-					</Text>
+					<Text style={styles.scoreLabel}>{_('Retronasal')}</Text>
 					<Text style={styles.scoreValue}>{item.retronasal.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>
-						{_('Tactile')}
-					</Text>
+					<Text style={styles.scoreLabel}>{_('Tactile')}</Text>
 					<Text style={styles.scoreValue}>{item.mouthTactile.toFixed(1)}</Text>
 				</View>
 			</View>
@@ -55,7 +49,9 @@ export default function LogsScreen() {
 				{_('Create your first coffee log to start your journey')}
 			</Text>
 			<Text style={styles.emptySubtitle}>
-				{_('Start your coffee journey by recording your first tasting experience')}
+				{_(
+					'Start your coffee journey by recording your first tasting experience',
+				)}
 			</Text>
 		</View>
 	)

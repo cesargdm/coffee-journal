@@ -6,11 +6,11 @@ export default function SettingsLayout() {
 
 	return (
 		<Stack>
-			<Stack.Screen 
-				name="index" 
-				options={{ 
-					title: _('Settings') 
-				}} 
+			<Stack.Screen
+				name="index"
+				options={{
+					title: _('Settings'),
+				}}
 			/>
 		</Stack>
 	)

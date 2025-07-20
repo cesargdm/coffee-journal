@@ -36,9 +36,5 @@ export function I18nProvider({ children }: I18nProviderProps) {
 		)
 	}
 
-	return (
-		<LinguiI18nProvider i18n={i18n}>
-			{children}
-		</LinguiI18nProvider>
-	)
+	return <LinguiI18nProvider i18n={i18n}>{children}</LinguiI18nProvider>
 }

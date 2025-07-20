@@ -13,14 +13,14 @@ export default function TabLayout() {
 				tabBarActiveTintColor: '#6B4423',
 			}}
 		>
-			<Tabs.Screen 
-				name="(home)" 
+			<Tabs.Screen
+				name="(home)"
 				options={{
 					title: _('Home'),
 				}}
 			/>
-			<Tabs.Screen 
-				name="settings" 
+			<Tabs.Screen
+				name="settings"
 				options={{
 					title: _('Settings'),
 				}}

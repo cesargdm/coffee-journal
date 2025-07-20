@@ -33,14 +33,26 @@ export default function SettingsScreen() {
 		setCurrentLocale(locale)
 	}
 
-	const SettingsSection = ({ children, title }: { children: React.ReactNode; title: string }) => (
+	const SettingsSection = ({
+		children,
+		title,
+	}: {
+		children: React.ReactNode
+		title: string
+	}) => (
 		<View style={styles.section}>
 			<Text style={styles.sectionTitle}>{title}</Text>
 			{children}
 		</View>
 	)
 
-	const SettingsItem = ({ children, onPress }: { children: React.ReactNode; onPress?: () => void }) => (
+	const SettingsItem = ({
+		children,
+		onPress,
+	}: {
+		children: React.ReactNode
+		onPress?: () => void
+	}) => (
 		<TouchableOpacity onPress={onPress} style={styles.item}>
 			{children}
 		</TouchableOpacity>
@@ -54,7 +66,9 @@ export default function SettingsScreen() {
 						<View style={styles.itemContent}>
 							<View style={styles.itemLeft}>
 								<Text style={styles.itemTitle}>{_('Dark Mode')}</Text>
-								<Text style={styles.itemSubtitle}>{_('Use dark theme throughout the app')}</Text>
+								<Text style={styles.itemSubtitle}>
+									{_('Use dark theme throughout the app')}
+								</Text>
 							</View>
 							<Switch onValueChange={handleThemeToggle} value={isDarkMode} />
 						</View>
@@ -67,7 +81,10 @@ export default function SettingsScreen() {
 							<View style={styles.itemLeft}>
 								<Text style={styles.itemTitle}>{_('Language')}</Text>
 							</View>
-							<LanguageSelector currentLocale={currentLocale} onLocaleChange={handleLocaleChange} />
+							<LanguageSelector
+								currentLocale={currentLocale}
+								onLocaleChange={handleLocaleChange}
+							/>
 						</View>
 					</SettingsItem>
 				</SettingsSection>
