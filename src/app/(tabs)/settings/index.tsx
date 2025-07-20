@@ -1,51 +1,39 @@
+import { useEffect, useState } from 'react'
 import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native'
 
+import { useLingui } from '@lingui/react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 import { UnistylesRuntime } from 'react-native-unistyles'
 
+import { LanguageSelector } from '@/components/LanguageSelector'
+import { getStoredLocale, i18n } from '@/lib/i18n'
+
 export default function SettingsScreen() {
 	const isDarkMode = UnistylesRuntime.themeName === 'dark'
+	const [currentLocale, setCurrentLocale] = useState(i18n.locale)
+	const { _ } = useLingui()
 
-	const toggleTheme = () => {
+	useEffect(() => {
+		const loadCurrentLocale = async () => {
+			const stored = await getStoredLocale()
+			if (stored) {
+				setCurrentLocale(stored)
+			}
+		}
+
+		void loadCurrentLocale()
+	}, [])
+
+	const handleThemeToggle = () => {
 		UnistylesRuntime.setTheme(isDarkMode ? 'light' : 'dark')
 	}
 
-	const SettingItem = ({
-		onValueChange,
-		showSwitch = false,
-		subtitle,
-		title,
-		value,
-	}: {
-		onValueChange?: (value: boolean) => void
-		showSwitch?: boolean
-		subtitle?: string
-		title: string
-		value?: boolean
-	}) => (
-		<TouchableOpacity
-			activeOpacity={showSwitch ? 1 : 0.7}
-			onPress={() => !showSwitch && onValueChange?.(!value)}
-			style={styles.settingItem}
-		>
-			<View style={styles.settingTextContainer}>
-				<Text style={styles.settingTitle}>{title}</Text>
-				{subtitle && <Text style={styles.settingSubtitle}>{subtitle}</Text>}
-			</View>
-			{showSwitch && (
-				<Switch
-					onValueChange={onValueChange}
-					testID="switch"
-					thumbColor={value ? '#FFFFFF' : '#f4f3f4'}
-					trackColor={{ false: '#E0E0E0', true: '#6B4423' }}
-					value={value}
-				/>
-			)}
-		</TouchableOpacity>
-	)
+	const handleLocaleChange = (locale: string) => {
+		setCurrentLocale(locale)
+	}
 
-	const SettingSection = ({
+	const SettingsSection = ({
 		children,
 		title,
 	}: {
@@ -54,26 +42,63 @@ export default function SettingsScreen() {
 	}) => (
 		<View style={styles.section}>
 			<Text style={styles.sectionTitle}>{title}</Text>
-			<View style={styles.sectionContent}>{children}</View>
+			{children}
 		</View>
 	)
 
-	return (
-		<SafeAreaView edges={['bottom']} style={styles.container}>
-			<ScrollView contentContainerStyle={styles.scrollContent}>
-				<SettingSection title="Appearance">
-					<SettingItem
-						onValueChange={toggleTheme}
-						showSwitch
-						subtitle="Use dark theme throughout the app"
-						title="Dark Mode"
-						value={isDarkMode}
-					/>
-				</SettingSection>
+	const SettingsItem = ({
+		children,
+		onPress,
+	}: {
+		children: React.ReactNode
+		onPress?: () => void
+	}) => (
+		<TouchableOpacity onPress={onPress} style={styles.item}>
+			{children}
+		</TouchableOpacity>
+	)
 
-				<SettingSection title="About">
-					<SettingItem subtitle="1.0.0" title="Version" />
-				</SettingSection>
+	return (
+		<SafeAreaView style={styles.container}>
+			<ScrollView contentContainerStyle={styles.scrollContainer}>
+				<SettingsSection title={_('Appearance')}>
+					<SettingsItem onPress={handleThemeToggle}>
+						<View style={styles.itemContent}>
+							<View style={styles.itemLeft}>
+								<Text style={styles.itemTitle}>{_('Dark Mode')}</Text>
+								<Text style={styles.itemSubtitle}>
+									{_('Use dark theme throughout the app')}
+								</Text>
+							</View>
+							<Switch onValueChange={handleThemeToggle} value={isDarkMode} />
+						</View>
+					</SettingsItem>
+				</SettingsSection>
+
+				<SettingsSection title={_('Language')}>
+					<SettingsItem>
+						<View style={styles.itemContent}>
+							<View style={styles.itemLeft}>
+								<Text style={styles.itemTitle}>{_('Language')}</Text>
+							</View>
+							<LanguageSelector
+								currentLocale={currentLocale}
+								onLocaleChange={handleLocaleChange}
+							/>
+						</View>
+					</SettingsItem>
+				</SettingsSection>
+
+				<SettingsSection title={_('About')}>
+					<SettingsItem>
+						<View style={styles.itemContent}>
+							<View style={styles.itemLeft}>
+								<Text style={styles.itemTitle}>{_('Version')}</Text>
+							</View>
+							<Text style={styles.itemValue}>1.0.0</Text>
+						</View>
+					</SettingsItem>
+				</SettingsSection>
 			</ScrollView>
 		</SafeAreaView>
 	)
@@ -89,7 +114,37 @@ const styles = StyleSheet.create((theme) => ({
 		height: 1,
 		marginHorizontal: theme.spacing.md,
 	},
-	scrollContent: {
+	item: {
+		alignItems: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		minHeight: 60,
+		padding: theme.spacing.md,
+	},
+	itemContent: {
+		alignItems: 'center',
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	itemLeft: {
+		flex: 1,
+		marginRight: theme.spacing.md,
+	},
+	itemSubtitle: {
+		...theme.typography.caption,
+		color: theme.colors.textSecondary,
+	},
+	itemTitle: {
+		...theme.typography.body,
+		color: theme.colors.text,
+		marginBottom: theme.spacing.xs / 2,
+	},
+	itemValue: {
+		...theme.typography.body,
+		color: theme.colors.textSecondary,
+	},
+	scrollContainer: {
 		paddingBottom: theme.spacing.xl,
 	},
 	section: {
@@ -107,25 +162,5 @@ const styles = StyleSheet.create((theme) => ({
 		marginBottom: theme.spacing.sm,
 		marginHorizontal: theme.spacing.md,
 		textTransform: 'uppercase',
-	},
-	settingItem: {
-		alignItems: 'center',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		minHeight: 60,
-		padding: theme.spacing.md,
-	},
-	settingSubtitle: {
-		...theme.typography.caption,
-		color: theme.colors.textSecondary,
-	},
-	settingTextContainer: {
-		flex: 1,
-		marginRight: theme.spacing.md,
-	},
-	settingTitle: {
-		...theme.typography.body,
-		color: theme.colors.text,
-		marginBottom: theme.spacing.xs / 2,
 	},
 }))

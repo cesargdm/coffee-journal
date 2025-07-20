@@ -1,5 +1,6 @@
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 
+import { useLingui } from '@lingui/react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 
@@ -17,53 +18,51 @@ type CoffeeLog = {
 const mockLogs: CoffeeLog[] = []
 
 export default function LogsScreen() {
+	const { _ } = useLingui()
+
 	const renderLogItem = ({ item }: { item: CoffeeLog }) => (
 		<TouchableOpacity style={styles.logItem}>
 			<View style={styles.logHeader}>
 				<Text style={styles.coffeeName}>{item.coffeeName}</Text>
 				<Text style={styles.overallScore}>{item.overallScore.toFixed(1)}</Text>
 			</View>
-			<Text style={styles.date}>
-				{item.date.toLocaleDateString('en-US', {
-					day: 'numeric',
-					month: 'short',
-					year: 'numeric',
-				})}
-			</Text>
-			<View style={styles.scoresContainer}>
+			<View style={styles.scoreRow}>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>Tongue</Text>
-					<Text style={styles.scoreValue}>{item.tongueTaste}</Text>
+					<Text style={styles.scoreLabel}>{_('Tongue')}</Text>
+					<Text style={styles.scoreValue}>{item.tongueTaste.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>Retronasal</Text>
-					<Text style={styles.scoreValue}>{item.retronasal}</Text>
+					<Text style={styles.scoreLabel}>{_('Retronasal')}</Text>
+					<Text style={styles.scoreValue}>{item.retronasal.toFixed(1)}</Text>
 				</View>
 				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>Tactile</Text>
-					<Text style={styles.scoreValue}>{item.mouthTactile}</Text>
+					<Text style={styles.scoreLabel}>{_('Tactile')}</Text>
+					<Text style={styles.scoreValue}>{item.mouthTactile.toFixed(1)}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
 	)
 
-	const EmptyState = () => (
+	const renderEmptyState = () => (
 		<View style={styles.emptyState}>
-			<Text style={styles.emptyStateText}>Create your first log</Text>
-			<Text style={styles.emptyStateSubtext}>
-				Start your coffee journey by recording your first tasting experience
+			<Text style={styles.emptyTitle}>
+				{_('Create your first coffee log to start your journey')}
+			</Text>
+			<Text style={styles.emptySubtitle}>
+				{_(
+					'Start your coffee journey by recording your first tasting experience',
+				)}
 			</Text>
 		</View>
 	)
 
 	return (
-		<SafeAreaView edges={['bottom']} style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<FlatList
-				contentContainerStyle={styles.listContent}
+				contentContainerStyle={styles.listContainer}
 				data={mockLogs}
-				ItemSeparatorComponent={() => <View style={styles.separator} />}
 				keyExtractor={(item) => item.id}
-				ListEmptyComponent={EmptyState}
+				ListEmptyComponent={renderEmptyState}
 				renderItem={renderLogItem}
 			/>
 		</SafeAreaView>
@@ -72,75 +71,80 @@ export default function LogsScreen() {
 
 const styles = StyleSheet.create((theme) => ({
 	coffeeName: {
-		...theme.typography.h3,
 		color: theme.colors.text,
 		flex: 1,
+		fontSize: 18,
+		fontWeight: '600',
 	},
 	container: {
 		backgroundColor: theme.colors.background,
 		flex: 1,
 	},
-	date: {
-		...theme.typography.caption,
-		color: theme.colors.textSecondary,
-		marginBottom: theme.spacing.sm,
-	},
 	emptyState: {
 		alignItems: 'center',
 		flex: 1,
 		justifyContent: 'center',
-		paddingHorizontal: theme.spacing.xl,
+		paddingHorizontal: 32,
 	},
-	emptyStateSubtext: {
-		...theme.typography.body,
+	emptySubtitle: {
 		color: theme.colors.textSecondary,
+		fontSize: 16,
+		lineHeight: 24,
 		textAlign: 'center',
 	},
-	emptyStateText: {
-		...theme.typography.h2,
+	emptyTitle: {
 		color: theme.colors.text,
-		marginBottom: theme.spacing.sm,
+		fontSize: 20,
+		fontWeight: '600',
+		marginBottom: 8,
 		textAlign: 'center',
 	},
-	listContent: {
+	listContainer: {
 		flexGrow: 1,
-		padding: theme.spacing.md,
+		padding: 16,
 	},
 	logHeader: {
 		alignItems: 'center',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginBottom: theme.spacing.xs,
+		marginBottom: 12,
 	},
 	logItem: {
 		backgroundColor: theme.colors.surface,
-		borderRadius: theme.borderRadius.md,
-		padding: theme.spacing.md,
+		borderRadius: 12,
+		elevation: 3,
+		marginBottom: 12,
+		padding: 16,
+		shadowColor: '#000',
+		shadowOffset: {
+			height: 2,
+			width: 0,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
 	},
 	overallScore: {
-		...theme.typography.h2,
 		color: theme.colors.primary,
-		marginLeft: theme.spacing.sm,
+		fontSize: 24,
+		fontWeight: 'bold',
 	},
 	scoreItem: {
 		alignItems: 'center',
 		flex: 1,
 	},
 	scoreLabel: {
-		...theme.typography.caption,
 		color: theme.colors.textSecondary,
-		marginBottom: theme.spacing.xs,
+		fontSize: 12,
+		marginBottom: 4,
+		textTransform: 'uppercase',
 	},
-	scoresContainer: {
+	scoreRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginTop: theme.spacing.sm,
 	},
 	scoreValue: {
-		...theme.typography.h3,
 		color: theme.colors.text,
-	},
-	separator: {
-		height: theme.spacing.md,
+		fontSize: 16,
+		fontWeight: '500',
 	},
 }))

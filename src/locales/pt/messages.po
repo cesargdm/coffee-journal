@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-07-18 21:21+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: pt\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#~ msgid "Appearance"
+#~ msgstr "Aparência"
+
+#. js-lingui-explicit-id
+msgid "about"
+msgstr "Sobre"
+
+#. js-lingui-explicit-id
+msgid "appearance"
+msgstr "Aparência"
+
+#. js-lingui-explicit-id
+msgid "create-first-log"
+msgstr "Crie seu primeiro registro de café para começar sua jornada"
+
+#. js-lingui-explicit-id
+msgid "dark-mode"
+msgstr "Modo Escuro"
+
+#. js-lingui-explicit-id
+msgid "dark-theme-subtitle"
+msgstr "Usar tema escuro em todo o aplicativo"
+
+#~ msgid "Version"
+#~ msgstr "Versão"
+
+#~ msgid "Use dark theme throughout the app"
+#~ msgstr "Usar tema escuro em todo o aplicativo"
+
+#. js-lingui-explicit-id
+msgid "language"
+msgstr "Idioma"
+
+#. js-lingui-explicit-id
+msgid "language-section"
+msgstr "Idioma"
+
+#~ msgid "Dark Mode"
+#~ msgstr "Modo Escuro"
+
+#. js-lingui-explicit-id
+msgid "retronasal"
+msgstr "retronasal"
+
+#. js-lingui-explicit-id
+msgid "start-coffee-journey"
+msgstr "Comece sua jornada do café"
+
+#. js-lingui-explicit-id
+msgid "tactile"
+msgstr "tátil"
+
+#. js-lingui-explicit-id
+msgid "tongue"
+msgstr "língua"
+
+#~ msgid "About"
+#~ msgstr "Sobre"
+
+msgid "Language"
+msgstr "Idioma"
+
+#. js-lingui-explicit-id
+msgid "version"
+msgstr "Versão"
