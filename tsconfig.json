@@ -22,5 +22,10 @@
 		"types": ["jest", "node"]
 	},
 	"extends": "expo/tsconfig.base",
-	"include": ["eslint.config.mjs", "src/**/*", "__tests__/**/*"]
+	"include": [
+		"eslint.config.mjs",
+		"drizzle.config.ts",
+		"src/**/*",
+		"__tests__/**/*"
+	]
 }
