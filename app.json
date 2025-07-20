@@ -15,18 +15,22 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.coffeejournal.app"
+			"bundleIdentifier": "app.coffeejournal.ios",
+			"infoPlist": {
+				"ITSAppUsesNonExemptEncryption": false
+			}
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.coffeejournal.app"
+			"package": "app.coffeejournal.android"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png",
-			"bundler": "metro"
+			"bundler": "metro",
+			"output": "static"
 		},
 		"scheme": "coffee-journal",
 		"experiments": {
