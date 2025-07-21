@@ -1,6 +1,5 @@
 import React from 'react'
 import { Modal as RNModal, Platform } from 'react-native'
-import { WebModal } from './WebModal'
 
 interface ModalProps {
   visible: boolean
@@ -11,18 +10,8 @@ interface ModalProps {
 }
 
 export function Modal({ visible, onClose, children, animationType = 'fade', transparent = true }: ModalProps) {
-  if (Platform.OS === 'web') {
-    return (
-      <WebModal 
-        visible={visible} 
-        onClose={onClose} 
-        animationType={animationType === 'none' ? 'fade' : animationType as any}
-      >
-        {children}
-      </WebModal>
-    )
-  }
-
+  // For now, use React Native's modal on all platforms
+  // WebModal can be imported dynamically when needed to avoid SSR issues
   return (
     <RNModal
       visible={visible}
