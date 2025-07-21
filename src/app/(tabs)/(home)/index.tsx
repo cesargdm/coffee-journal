@@ -4,44 +4,41 @@ import { useLingui } from '@lingui/react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 
-type CoffeeLog = {
-	coffeeName: string
-	date: Date
-	id: string
-	mouthTactile: number
-	overallScore: number
-	retronasal: number
-	tongueTaste: number
-}
+import { useLogStore } from '@/lib/stores/logStore'
 
-// No mock data - start with empty state
-const mockLogs: CoffeeLog[] = []
+import type { CoffeeLog } from '@/lib/stores/logStore'
 
 export default function LogsScreen() {
 	const { _ } = useLingui()
+	const logs = useLogStore((state) => state.logs)
 
-	const renderLogItem = ({ item }: { item: CoffeeLog }) => (
-		<TouchableOpacity style={styles.logItem}>
-			<View style={styles.logHeader}>
-				<Text style={styles.coffeeName}>{item.coffeeName}</Text>
-				<Text style={styles.overallScore}>{item.overallScore.toFixed(1)}</Text>
-			</View>
-			<View style={styles.scoreRow}>
-				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>{_('Tongue')}</Text>
-					<Text style={styles.scoreValue}>{item.tongueTaste.toFixed(1)}</Text>
+	const renderLogItem = ({ item }: { item: CoffeeLog }) => {
+		// Extract coffee name from notes if available
+		const coffeeName = item.notes.split('\n')[0] || `${item.brewMethod} Coffee`
+		
+		return (
+			<TouchableOpacity style={styles.logItem}>
+				<View style={styles.logHeader}>
+					<Text style={styles.coffeeName}>{coffeeName}</Text>
+					<Text style={styles.overallScore}>{item.rating.toFixed(1)}</Text>
 				</View>
-				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>{_('Retronasal')}</Text>
-					<Text style={styles.scoreValue}>{item.retronasal.toFixed(1)}</Text>
+				<View style={styles.scoreRow}>
+					<View style={styles.scoreItem}>
+						<Text style={styles.scoreLabel}>{_('Method')}</Text>
+						<Text style={styles.scoreValue}>{item.brewMethod}</Text>
+					</View>
+					<View style={styles.scoreItem}>
+						<Text style={styles.scoreLabel}>{_('Time')}</Text>
+						<Text style={styles.scoreValue}>{item.brewTime}s</Text>
+					</View>
+					<View style={styles.scoreItem}>
+						<Text style={styles.scoreLabel}>{_('Temp')}</Text>
+						<Text style={styles.scoreValue}>{item.temperature}°C</Text>
+					</View>
 				</View>
-				<View style={styles.scoreItem}>
-					<Text style={styles.scoreLabel}>{_('Tactile')}</Text>
-					<Text style={styles.scoreValue}>{item.mouthTactile.toFixed(1)}</Text>
-				</View>
-			</View>
-		</TouchableOpacity>
-	)
+			</TouchableOpacity>
+		)
+	}
 
 	const renderEmptyState = () => (
 		<View style={styles.emptyState}>
@@ -60,7 +57,7 @@ export default function LogsScreen() {
 		<SafeAreaView style={styles.container}>
 			<FlatList
 				contentContainerStyle={styles.listContainer}
-				data={mockLogs}
+				data={logs}
 				keyExtractor={(item) => item.id}
 				ListEmptyComponent={renderEmptyState}
 				renderItem={renderLogItem}

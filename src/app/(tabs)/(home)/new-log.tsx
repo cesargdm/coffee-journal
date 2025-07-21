@@ -7,12 +7,14 @@ import {
 	View,
 } from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { useForm } from '@tanstack/react-form'
 import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native-unistyles'
 import { z } from 'zod'
+
+import { useLogStore } from '@/lib/stores/logStore'
 
 import type { StandardSchemaV1Issue } from '@tanstack/react-form'
 
@@ -40,6 +42,8 @@ const coffeeLogSchema = z.object({
 type CoffeeLogForm = z.infer<typeof coffeeLogSchema>
 
 export default function NewLogScreen() {
+	const addLog = useLogStore((state) => state.addLog)
+	
 	const form = useForm({
 		defaultValues: {
 			coffeeName: '',
@@ -54,8 +58,18 @@ export default function NewLogScreen() {
 				const overallScore =
 					(value.tongueTaste + value.retronasal + value.mouthTactile) / 3
 
-				// Here you would typically save to your data store
-				// For now, we'll just show a success message
+				// Save to Zustand store
+				addLog({
+					brewMethod: 'Espresso', // Default for now
+					coffeeAmount: 18, // Default values
+					waterAmount: 36,
+					grindSize: 'Fine',
+					brewTime: 25,
+					temperature: 93,
+					rating: overallScore,
+					notes: `${value.coffeeName}${value.notes ? `\n${value.notes}` : ''}\nTaste: ${value.tongueTaste}, Aroma: ${value.retronasal}, Mouthfeel: ${value.mouthTactile}`,
+				})
+				
 				Alert.alert(
 					'Success',
 					`Coffee log created!\nOverall Score: ${overallScore.toFixed(1)}`,
@@ -137,9 +151,9 @@ export default function NewLogScreen() {
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Coffee Name</Text>
 								<View style={styles.inputWrapper}>
-									<Ionicons
-										color="#8B6F47"
-										name="cafe"
+									<FontAwesome6
+										color="#728C70"
+										name="mug-hot"
 										size={20}
 										style={styles.inputIcon}
 									/>
@@ -218,9 +232,9 @@ export default function NewLogScreen() {
 							<View style={styles.inputContainer}>
 								<Text style={styles.inputLabel}>Notes (Optional)</Text>
 								<View style={styles.inputWrapper}>
-									<Ionicons
-										color="#8B6F47"
-										name="document-text"
+									<FontAwesome6
+										color="#728C70"
+										name="file-lines"
 										size={20}
 										style={styles.inputIcon}
 									/>
@@ -251,9 +265,9 @@ export default function NewLogScreen() {
 									!canSubmit && styles.submitButtonDisabled,
 								]}
 							>
-								<Ionicons
+								<FontAwesome6
 									color={canSubmit ? '#FFFFFF' : '#B0B0B0'}
-									name="checkmark-circle"
+									name="circle-check"
 									size={20}
 									style={styles.submitIcon}
 								/>

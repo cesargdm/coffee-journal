@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import * as DropdownMenu from 'zeego/dropdown-menu'
 
 import { dynamicActivate, locales, saveLocale } from '@/lib/i18n'
@@ -40,7 +40,7 @@ export function LanguageSelector({
 					<Text style={{ color: '#333', fontSize: 16 }}>
 						{locales[currentLocale as keyof typeof locales]}
 					</Text>
-					<Ionicons color="#666" name="chevron-down" size={20} />
+					<FontAwesome6 color="#666" name="chevron-down" size={20} />
 				</View>
 			</DropdownMenu.Trigger>
 

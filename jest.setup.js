@@ -101,6 +101,29 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 	setItem: jest.fn(() => Promise.resolve()),
 }))
 
+// Mock react-native-mmkv
+jest.mock('react-native-mmkv', () => {
+	const mmkvMock = {
+		getString: jest.fn(),
+		set: jest.fn(),
+		delete: jest.fn(),
+		getAllKeys: jest.fn(() => []),
+		clearAll: jest.fn(),
+		contains: jest.fn(() => false),
+	}
+	
+	return {
+		MMKV: jest.fn(() => mmkvMock),
+	}
+})
+
+// Mock react-native-reanimated
+jest.mock('react-native-reanimated', () => {
+	const Reanimated = require('react-native-reanimated/mock')
+	Reanimated.default.call = () => {}
+	return Reanimated
+})
+
 // Mock Zeego
 jest.mock('zeego/dropdown-menu', () => ({
 	Content: ({ children }) => children,
