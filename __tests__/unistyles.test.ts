@@ -7,11 +7,11 @@ const lightTheme = {
 		sm: 4,
 	},
 	colors: {
-		background: '#FFFFFF',
+		background: '#F2F2F2',
 		border: '#E0E0E0',
-		primary: '#6B4423',
-		surface: '#F5F5F5',
-		text: '#1A1A1A',
+		primary: '#E34530',
+		surface: '#FFFFFF',
+		text: '#0C0C0C',
 		textSecondary: '#666666',
 	},
 	spacing: {
@@ -35,7 +35,7 @@ const darkTheme = {
 	colors: {
 		background: '#121212',
 		border: '#333333',
-		primary: '#D2691E',
+		primary: '#E34530',
 		surface: '#1E1E1E',
 		text: '#FFFFFF',
 		textSecondary: '#B0B0B0',
@@ -47,9 +47,9 @@ const darkTheme = {
 describe('Unistyles Theme Configuration', () => {
 	describe('Light Theme', () => {
 		it('has correct color scheme', () => {
-			expect(lightTheme.colors.background).toBe('#FFFFFF')
-			expect(lightTheme.colors.text).toBe('#1A1A1A')
-			expect(lightTheme.colors.primary).toBe('#6B4423')
+			expect(lightTheme.colors.background).toBe('#F2F2F2')
+			expect(lightTheme.colors.text).toBe('#0C0C0C')
+			expect(lightTheme.colors.primary).toBe('#E34530')
 		})
 
 		it('has all required color properties', () => {
@@ -74,7 +74,7 @@ describe('Unistyles Theme Configuration', () => {
 		it('has correct color scheme', () => {
 			expect(darkTheme.colors.background).toBe('#121212')
 			expect(darkTheme.colors.text).toBe('#FFFFFF')
-			expect(darkTheme.colors.primary).toBe('#D2691E')
+			expect(darkTheme.colors.primary).toBe('#E34530')
 		})
 
 		it('has all required color properties', () => {
